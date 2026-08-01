@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
-import { getPendingArticles, insertAnalysis } from '@/lib/supabase/queries/analyses';
+import { getPendingArticles, insertAnalysis, getAnalysisByArticleId, updateAnalysisEmbedding } from '@/lib/supabase/queries/analyses';
 import { markArticleAnalyzed, getArticleById } from '@/lib/supabase/queries/articles';
 import { createLog } from '@/lib/supabase/queries/logs';
-import { analyzeArticle } from '@/lib/ai/analysis';
+import { analyzeArticle, generateArticleEmbedding } from '@/lib/ai/analysis';
 import type { Article } from '@/lib/supabase/types';
 
 export const dynamic = 'force-dynamic';
@@ -55,13 +55,13 @@ export async function POST(request: Request) {
       targetArticles = await getPendingArticles(limit);
     }
 
-    console.log(`[AI Analysis] Found ${targetArticles.length} target articles to analyze.`);
+    console.log(`[AI Analysis] Found ${targetArticles.length} target articles to process.`);
 
     if (targetArticles.length === 0) {
       const durationMs = Date.now() - startTime;
       const summary = {
         status: 'success',
-        message: 'No pending articles found requiring analysis.',
+        message: 'No pending articles found requiring analysis or vector embedding backfill.',
         total_pending: 0,
         analyzed_count: 0,
         failed_count: 0,
@@ -87,42 +87,69 @@ export async function POST(request: Request) {
       error?: string;
       bias_label?: string;
       sentiment_label?: string;
+      has_embedding?: boolean;
     }> = [];
 
     // Process target articles
     for (let i = 0; i < targetArticles.length; i++) {
       const article = targetArticles[i];
       console.log(
-        `[AI Analysis] [${i + 1}/${targetArticles.length}] Analyzing article: "${article.title}" (${article.id})`
+        `[AI Analysis] [${i + 1}/${targetArticles.length}] Processing article: "${article.title}" (${article.id})`
       );
 
       try {
-        // Run AI analysis model call & output validation
-        const analysisInput = await analyzeArticle(article.id, article.title, article.raw_text);
+        const existingAnalysis = await getAnalysisByArticleId(article.id);
 
-        // Save analysis record to Supabase
-        const savedAnalysis = await insertAnalysis(analysisInput);
+        if (existingAnalysis) {
+          // Analysis exists, but embedding is missing — backfill embedding only
+          console.log(`[AI Analysis] Backfilling missing embedding for article "${article.title}"...`);
+          const embedding = await generateArticleEmbedding(article.title, article.raw_text);
+          await updateAnalysisEmbedding(article.id, embedding);
+          await markArticleAnalyzed(article.id);
 
-        // Update article analyzed_at timestamp
-        await markArticleAnalyzed(article.id);
+          analyzedCount++;
+          console.log(`[AI Analysis] Successfully backfilled embedding for article "${article.title}".`);
 
-        analyzedCount++;
-        console.log(
-          `[AI Analysis] Successfully analyzed article "${article.title}": Bias=${savedAnalysis.bias_label} (${savedAnalysis.left_percentage}%L / ${savedAnalysis.center_percentage}%C / ${savedAnalysis.right_percentage}%R), Sentiment=${savedAnalysis.sentiment_label}`
-        );
+          resultsSummary.push({
+            article_id: article.id,
+            title: article.title,
+            status: 'success',
+            bias_label: existingAnalysis.bias_label,
+            sentiment_label: existingAnalysis.sentiment_label,
+            has_embedding: true,
+          });
+        } else {
+          // Run full AI analysis + embedding generation
+          const analysisInput = await analyzeArticle(article.id, article.title, article.raw_text);
+          const embedding = await generateArticleEmbedding(article.title, article.raw_text);
 
-        resultsSummary.push({
-          article_id: article.id,
-          title: article.title,
-          status: 'success',
-          bias_label: savedAnalysis.bias_label,
-          sentiment_label: savedAnalysis.sentiment_label,
-        });
+          analysisInput.embedding = embedding;
+
+          // Save analysis record with embedding to Supabase
+          const savedAnalysis = await insertAnalysis(analysisInput);
+
+          // Update article analyzed_at timestamp only after analysis and embedding are saved
+          await markArticleAnalyzed(article.id);
+
+          analyzedCount++;
+          console.log(
+            `[AI Analysis] Successfully analyzed article & saved embedding for "${article.title}": Bias=${savedAnalysis.bias_label} (${savedAnalysis.left_percentage}%L / ${savedAnalysis.center_percentage}%C / ${savedAnalysis.right_percentage}%R), Sentiment=${savedAnalysis.sentiment_label}`
+          );
+
+          resultsSummary.push({
+            article_id: article.id,
+            title: article.title,
+            status: 'success',
+            bias_label: savedAnalysis.bias_label,
+            sentiment_label: savedAnalysis.sentiment_label,
+            has_embedding: true,
+          });
+        }
       } catch (err) {
         failedCount++;
         const errorMessage = err instanceof Error ? err.message : String(err);
         console.error(
-          `[AI Analysis] Failed to analyze article "${article.title}" (${article.id}):`,
+          `[AI Analysis] Failed to process article "${article.title}" (${article.id}):`,
           errorMessage
         );
 

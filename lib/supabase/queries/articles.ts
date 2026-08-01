@@ -119,3 +119,71 @@ export async function markArticleAnalyzed(articleId: string, timestamp = new Dat
     throw new Error(`Failed to mark article as analyzed: ${error.message}`);
   }
 }
+
+/**
+ * Finds related articles by vector similarity search (cosine distance).
+ * Strictly complies with AGENTS.md Section 20.
+ */
+export async function getRelatedArticles(
+  articleId: string,
+  embedding: number[] | string,
+  limit = 5
+): Promise<ArticleWithAnalysis[]> {
+  let parsedEmbedding: number[] = [];
+  if (Array.isArray(embedding)) {
+    parsedEmbedding = embedding;
+  } else if (typeof embedding === 'string') {
+    try {
+      parsedEmbedding = JSON.parse(embedding);
+    } catch {
+      return [];
+    }
+  }
+
+  if (!articleId || !parsedEmbedding || !Array.isArray(parsedEmbedding) || parsedEmbedding.length === 0) {
+    return [];
+  }
+
+  const supabase = getSupabaseAdmin();
+  const { data, error } = await supabase.rpc('match_related_articles', {
+    target_article_id: articleId,
+    target_embedding: parsedEmbedding,
+    match_count: limit,
+  });
+
+  if (error) {
+    console.error(`Error fetching related articles for ${articleId}:`, error.message);
+    return [];
+  }
+
+  if (!data) return [];
+
+  return (data as Array<{
+    id: string;
+    source_id: string;
+    url: string;
+    canonical_url: string;
+    title: string;
+    image_url: string;
+    published_at: string;
+    raw_text: string;
+    scraped_at: string;
+    analyzed_at: string | null;
+    source: Record<string, unknown>;
+    analysis: Record<string, unknown>;
+  }>).map((row) => ({
+    id: row.id,
+    source_id: row.source_id,
+    url: row.url,
+    canonical_url: row.canonical_url,
+    title: row.title,
+    image_url: row.image_url,
+    published_at: row.published_at,
+    raw_text: row.raw_text,
+    scraped_at: row.scraped_at,
+    analyzed_at: row.analyzed_at,
+    source: row.source as unknown as ArticleWithAnalysis['source'],
+    analysis: row.analysis as unknown as ArticleWithAnalysis['analysis'],
+  }));
+}
+

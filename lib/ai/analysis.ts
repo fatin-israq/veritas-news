@@ -1,4 +1,4 @@
-import { generateObject } from 'ai';
+import { generateObject, embed } from 'ai';
 import { z } from 'zod';
 import { google, DEFAULT_MODEL_NAME } from './client';
 import type { InsertAnalysisInput, SentimentLabel, BiasLabel, Json } from '../supabase/types';
@@ -110,6 +110,21 @@ function normalizePercentages(rawLeft: number, rawCenter: number, rawRight: numb
     center: Math.max(0, Math.min(100, center)),
     right: Math.max(0, Math.min(100, right)),
   };
+}
+
+/**
+ * Generates vector embedding for article text using Gemini gemini-embedding-001 model.
+ */
+export async function generateArticleEmbedding(
+  title: string,
+  rawText: string
+): Promise<number[]> {
+  const textToEmbed = `${title}\n\n${rawText}`.slice(0, 8000);
+  const { embedding } = await embed({
+    model: google.textEmbeddingModel('gemini-embedding-001'),
+    value: textToEmbed,
+  });
+  return embedding.slice(0, 768);
 }
 
 /**

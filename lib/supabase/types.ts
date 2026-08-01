@@ -49,6 +49,7 @@ export interface ArticleAnalysis {
   loaded_terms: Json;
   disclaimer: string | null;
   model: string;
+  embedding?: number[] | null;
   created_at: string;
 }
 
@@ -134,6 +135,7 @@ export type InsertAnalysisInput = {
   loaded_terms?: Json;
   disclaimer?: string | null;
   model: string;
+  embedding?: number[] | null;
   created_at?: string;
 };
 

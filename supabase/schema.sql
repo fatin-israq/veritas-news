@@ -1,6 +1,9 @@
 -- Veritas News Supabase Schema DDL
 -- Core Tables: sources, articles, article_analyses, logs, oxylabs_schedules, oxylabs_schedule_runs
 
+-- Enable vector extension for pgvector similarity search
+CREATE EXTENSION IF NOT EXISTS vector;
+
 -- 1. Sources Table
 CREATE TABLE IF NOT EXISTS public.sources (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -27,7 +30,6 @@ CREATE TABLE IF NOT EXISTS public.articles (
 );
 
 -- 3. Article Analyses Table
--- Note: embedding vector(768) column will be added in Section 20 after pgvector is enabled
 CREATE TABLE IF NOT EXISTS public.article_analyses (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   article_id UUID NOT NULL UNIQUE REFERENCES public.articles(id) ON DELETE CASCADE,
@@ -44,6 +46,7 @@ CREATE TABLE IF NOT EXISTS public.article_analyses (
   loaded_terms JSONB NOT NULL DEFAULT '[]'::jsonb,
   disclaimer TEXT,
   model TEXT NOT NULL,
+  embedding vector(768),
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -82,6 +85,7 @@ CREATE INDEX IF NOT EXISTS idx_articles_source_id ON public.articles(source_id);
 CREATE INDEX IF NOT EXISTS idx_articles_url ON public.articles(url);
 CREATE INDEX IF NOT EXISTS idx_articles_analyzed_at ON public.articles(analyzed_at);
 CREATE INDEX IF NOT EXISTS idx_article_analyses_article_id ON public.article_analyses(article_id);
+CREATE INDEX IF NOT EXISTS idx_article_analyses_embedding ON public.article_analyses USING ivfflat (embedding vector_cosine_ops) WITH (lists = 100);
 CREATE INDEX IF NOT EXISTS idx_logs_created_at ON public.logs(created_at DESC);
 
 -- Enable Row Level Security (RLS)
@@ -105,3 +109,50 @@ CREATE POLICY "Allow public read access to article_analyses" ON public.article_a
 CREATE POLICY "Allow public read access to logs" ON public.logs
   FOR SELECT TO anon, authenticated USING (true);
 
+-- RPC Function for Related Articles Vector Similarity Search
+CREATE OR REPLACE FUNCTION match_related_articles(
+  target_article_id UUID,
+  target_embedding vector(768),
+  match_count INT DEFAULT 5
+)
+RETURNS TABLE (
+  id UUID,
+  source_id UUID,
+  url TEXT,
+  canonical_url TEXT,
+  title TEXT,
+  image_url TEXT,
+  published_at TIMESTAMPTZ,
+  raw_text TEXT,
+  scraped_at TIMESTAMPTZ,
+  analyzed_at TIMESTAMPTZ,
+  source JSONB,
+  analysis JSONB
+)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  RETURN QUERY
+  SELECT
+    a.id,
+    a.source_id,
+    a.url,
+    a.canonical_url,
+    a.title,
+    a.image_url,
+    a.published_at,
+    a.raw_text,
+    a.scraped_at,
+    a.analyzed_at,
+    to_jsonb(s.*) AS source,
+    to_jsonb(an.*) AS analysis
+  FROM article_analyses an
+  JOIN articles a ON a.id = an.article_id
+  JOIN sources s ON s.id = a.source_id
+  WHERE an.embedding IS NOT NULL
+    AND a.analyzed_at IS NOT NULL
+    AND a.id != target_article_id
+  ORDER BY an.embedding <=> target_embedding ASC
+  LIMIT match_count;
+END;
+$$;

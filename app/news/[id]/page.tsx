@@ -14,7 +14,7 @@ import {
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
-import { getArticleById, getArticles } from "@/lib/supabase/queries/articles";
+import { getArticleById, getRelatedArticles } from "@/lib/supabase/queries/articles";
 import { BiasMeter } from "@/components/ui/bias-meter";
 import type { ArticleWithAnalysis } from "@/lib/supabase/types";
 
@@ -85,13 +85,16 @@ export default async function NewsDetailsPage({ params }: Props) {
     dbError = err instanceof Error ? err.message : "Failed to load article from database";
   }
 
-  // Related articles for bottom section
+  // Fetch vector-similar related articles using pgvector cosine similarity
   let relatedArticles: ArticleWithAnalysis[] = [];
-  try {
-    const allArticles = await getArticles(6);
-    relatedArticles = allArticles.filter((a) => a.id !== id).slice(0, 4);
-  } catch {
-    // Ignore related articles error
+  const articleEmbedding = liveArticle?.analysis?.embedding;
+
+  if (liveArticle && articleEmbedding) {
+    try {
+      relatedArticles = await getRelatedArticles(liveArticle.id, articleEmbedding, 5);
+    } catch (err) {
+      console.error(`Error fetching vector related articles for ${id}:`, err);
+    }
   }
 
   // Handle fallback demo items if ID is static or article not found in DB

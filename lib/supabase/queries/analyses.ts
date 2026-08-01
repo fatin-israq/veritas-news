@@ -2,10 +2,11 @@ import { getSupabaseAdmin } from '../server';
 import type { Article, ArticleAnalysis, InsertAnalysisInput } from '../types';
 
 /**
- * Detects articles pending AI analysis.
- * Strictly complies with AGENTS.md Section 19:
- * "detect pending articles by LEFT JOINing articles to article_analyses.
- *  Never rely on analyzed_at IS NULL alone... An article is pending when no article_analyses row exists for it."
+ * Detects articles pending AI analysis or vector embedding.
+ * Strictly complies with AGENTS.md Section 19 & Section 20:
+ * "detect pending articles by LEFT JOINing articles to article_analyses...
+ *  articles whose article_analyses row exists but has embedding IS NULL will automatically
+ *  be picked up for embedding backfill on the next run without re-running the full analysis."
  *
  * And complies with AGENTS.md Section 21:
  * "fetch the joined data without a filter and apply the condition in JavaScript after the query returns."
@@ -16,7 +17,7 @@ export async function getPendingArticles(limit?: number): Promise<Article[]> {
     .from('articles')
     .select(`
       *,
-      article_analyses(id)
+      article_analyses(id, embedding)
     `)
     .order('published_at', { ascending: false });
 
@@ -27,14 +28,16 @@ export async function getPendingArticles(limit?: number): Promise<Article[]> {
 
   if (!data) return [];
 
-  // Filter in JavaScript for rows where article_analyses is null or empty array
+  // Filter in JavaScript for rows where article_analyses is missing or has NULL embedding
   const pendingArticles: Article[] = [];
 
-  for (const item of data as unknown as Array<Article & { article_analyses: Array<{ id: string }> | null }>) {
+  for (const item of data as unknown as Array<Article & { article_analyses: Array<{ id: string; embedding?: number[] | null }> | null }>) {
     const analyses = item.article_analyses;
-    const hasAnalysis = Array.isArray(analyses) ? analyses.length > 0 : Boolean(analyses);
+    const hasAnalysis = Array.isArray(analyses) && analyses.length > 0;
+    const hasEmbedding = hasAnalysis && Array.isArray(analyses[0].embedding) && analyses[0].embedding.length > 0;
 
-    if (!hasAnalysis) {
+    // Article is pending if it has no analysis OR has analysis but missing embedding
+    if (!hasAnalysis || !hasEmbedding) {
       // Destructure to remove joined field before returning clean Article object
       const { article_analyses, ...article } = item;
       void article_analyses; // eliminate unused variable warning
@@ -80,3 +83,20 @@ export async function insertAnalysis(analysis: InsertAnalysisInput): Promise<Art
 
   return data as ArticleAnalysis;
 }
+
+/**
+ * Updates an existing analysis row with a new vector embedding.
+ */
+export async function updateAnalysisEmbedding(articleId: string, embedding: number[]): Promise<void> {
+  const supabase = getSupabaseAdmin();
+  const { error } = await supabase
+    .from('article_analyses')
+    .update({ embedding })
+    .eq('article_id', articleId);
+
+  if (error) {
+    console.error(`Error updating embedding for article ${articleId}:`, error.message);
+    throw new Error(`Failed to update analysis embedding: ${error.message}`);
+  }
+}
+
