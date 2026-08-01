@@ -2,25 +2,51 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0d0d0f;
+  
+  /* Brand & Neutral Colors */
+  --text-primary: #0d0d0f;
+  --text-secondary: #6e7280;
+  --surface: #f8f8f6;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f0f0fd;
+  --border-color: #e5e7eb;
+  --divider-color: #e5e7eb;
+
+  /* Semantic Bias Colors */
+  --bias-left: #b42318;
+  --bias-center: #e5e7eb;
+  --bias-right: #1d4ed8;
 }
 
 @theme inline {
+  --font-poppins: var(--font-poppins);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-surface: var(--surface);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-secondary: var(--bg-secondary);
+  --color-border-custom: var(--border-color);
+  --color-divider-custom: var(--divider-color);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-bias-left: var(--bias-left);
+  --color-bias-center: var(--bias-center);
+  --color-bias-right: var(--bias-right);
+
+  --shadow-custom-sm: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-custom-md: 0px 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-custom-lg: 0px 12px 24px rgba(0, 0, 0, 0.12);
+
+  --radius-custom-sm: 4px;
+  --radius-custom-md: 8px;
+  --radius-custom-lg: 12px;
+  --radius-custom-full: 9999px;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--surface);
+  color: var(--text-primary);
+  font-family: var(--font-poppins), sans-serif;
 }
