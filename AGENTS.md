@@ -70,7 +70,7 @@ Use them for:
 - `clerk`: authentication and protected routes
 - `supabase`: schema, migrations, queries, service role usage, dedupe, logs, pgvector
 - `oxylabs-web-scraper`: Oxylabs Web Scraper API, Scheduler, scheduled jobs, scraping behavior
-- `ai-sdk`: Vercel AI SDK and OpenAI provider usage, model calls, AI analysis output handling
+- `ai-sdk`: Vercel AI SDK and Gemini (Google) provider usage, model calls, AI analysis output handling
 
 Do not invent new skills.
 
@@ -134,7 +134,7 @@ Use:
 - Oxylabs Scheduler
 - Cheerio
 - Vercel AI SDK
-- OpenAI provider
+- Gemini provider (@ai-sdk/google)
 - Zod
 - Tailwind CSS
 - shadcn/ui
@@ -202,7 +202,7 @@ Each article analysis should store:
 - disclaimer
 - model name
 
-The `embedding vector(1536)` column is added to `article_analyses` in section 20 after pgvector is enabled. Do not include it in the initial schema.
+The `embedding vector(768)` column is added to `article_analyses` in section 20 after pgvector is enabled. Do not include it in the initial schema.
 
 When any of these fields are added or changed, update `supabase/schema.sql`, `lib/supabase/types.ts`, and run the corresponding ALTER SQL in Supabase Dashboard â†’ SQL Editor before testing.
 
@@ -607,9 +607,9 @@ Framing output rules:
 
 This section is implemented after AI analysis is working (section 19). pgvector upgrades the analysis pipeline to also generate embeddings and powers a Related Articles feature on the news details page.
 
-Enable pgvector in Supabase Dashboard under Database Extensions. Then add an `embedding vector(1536)` column to `article_analyses` and create an IVFFlat cosine index on it via the SQL Editor. Update `supabase/schema.sql`, `lib/supabase/types.ts`, and run the ALTER SQL before testing.
+Enable pgvector in Supabase Dashboard under Database Extensions. Then add an `embedding vector(768)` column to `article_analyses` and create an IVFFlat cosine index on it via the SQL Editor. Update `supabase/schema.sql`, `lib/supabase/types.ts`, and run the ALTER SQL before testing.
 
-Update the `/api/analyze` route to also call OpenAI text-embedding-3-small for each article alongside the existing analysis call and save the result to `article_analyses.embedding`. Update `analyzed_at` only after both analysis and embedding are saved. Because pending detection uses LEFT JOIN logic (see section 19), articles whose `article_analyses` row exists but has `embedding IS NULL` will automatically be picked up for embedding backfill on the next run without re-running the full analysis.
+Update the `/api/analyze` route to also call Gemini text-embedding-004 for each article alongside the existing analysis call and save the result to `article_analyses.embedding`. Update `analyzed_at` only after both analysis and embedding are saved. Because pending detection uses LEFT JOIN logic (see section 19), articles whose `article_analyses` row exists but has `embedding IS NULL` will automatically be picked up for embedding backfill on the next run without re-running the full analysis.
 
 To find related articles, query `article_analyses` joined to `articles` and `sources`, filter to rows where the embedding is not null and the article is analyzed and is not the current article, then order by cosine distance (`<=>`) to the current article's embedding and limit to 5 results.
 
@@ -625,13 +625,13 @@ Never expose to browser code:
 
 - Supabase service role key
 - Oxylabs credentials
-- OpenAI credentials
+- Gemini credentials
 - scheduler/admin secrets
 
 Never run from browser code:
 
 - Oxylabs calls
-- OpenAI/model calls
+- Gemini/model calls
 - scraping
 - analysis
 - scheduler processing
@@ -649,7 +649,7 @@ Canonical list lives in `.env.example`. Only `NEXT_PUBLIC_*` values may reach br
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY`                                               | Supabase anon key                                                                       | client + server |
 | `SUPABASE_SERVICE_ROLE_KEY`                                                   | Service-role DB access for writes and pipeline reads                                    | server only     |
 | `OXY_WSA_USERNAME` / `OXY_WSA_PASSWORD`                                       | Oxylabs Web Scraper API + Scheduler auth                                                | server only     |
-| `OPENAI_API_KEY`                                                              | AI analysis and `text-embedding-3-small`                                                | server only     |
+| `GOOGLE_GENERATIVE_AI_API_KEY` (or `GEMINI_API_KEY`)                         | AI analysis and `text-embedding-004`                                                    | server only     |
 | `VERITAS_ADMIN_SECRET`                                                        | Shared secret for `x-veritas-admin-secret` on action routes (section 15)                | server only     |
 | `ANALYSIS_BATCH_SIZE`                                                         | Optional; articles analyzed per batch (default 5)                                       | server only     |
 | `CRON_SECRET`                                                                 | Protects `GET /api/cron/pipeline`; injected by Vercel, not in `.env.local` (section 18) | server only     |

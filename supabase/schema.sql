@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS public.articles (
 );
 
 -- 3. Article Analyses Table
--- Note: embedding vector(1536) column will be added in Section 20 after pgvector is enabled
+-- Note: embedding vector(768) column will be added in Section 20 after pgvector is enabled
 CREATE TABLE IF NOT EXISTS public.article_analyses (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   article_id UUID NOT NULL UNIQUE REFERENCES public.articles(id) ON DELETE CASCADE,

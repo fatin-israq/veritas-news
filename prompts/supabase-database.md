@@ -21,7 +21,7 @@ Set up the Supabase database schema, TypeScript types, client instances, and dat
 ## Decisions & Assumptions
 1. **Database Schema (`supabase/schema.sql`)**:
    - Create tables: `sources`, `articles`, `article_analyses`, `logs`, `oxylabs_schedules`, `oxylabs_schedule_runs`.
-   - Omit `embedding vector(1536)` from `article_analyses` for now (it will be added in Section 20 pgvector step).
+   - Omit `embedding vector(768)` from `article_analyses` for now (it will be added in Section 20 pgvector step).
    - Enable Row Level Security (RLS) on all tables in the `public` schema.
    - Add public read RLS policies for `anon` and `authenticated` roles for `sources`, `articles`, `article_analyses`, and `logs`.
    - Provide initial seed SQL for default active news sources (Reuters, BBC News, The Guardian, NPR, Fox News).
