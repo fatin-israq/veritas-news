@@ -1,4 +1,5 @@
 import React from "react";
+import { auth } from "@clerk/nextjs/server";
 import {
   Bookmark,
   Share2,
@@ -9,7 +10,8 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 
-export default function NewsDetailsPage() {
+export default async function NewsDetailsPage() {
+  await auth.protect();
   const relatedStories = [
     {
       id: "r1",

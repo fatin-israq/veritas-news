@@ -8,6 +8,7 @@ import {
   ChevronRight,
   Plus,
 } from "lucide-react";
+import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 
 export const Header: React.FC = () => {
@@ -160,7 +161,7 @@ export const Header: React.FC = () => {
               </nav>
             </div>
 
-            {/* Right: Subscribe & Login Action Buttons in Main Navbar */}
+            {/* Right: Subscribe & Login/User Account Action Buttons */}
             <div className="flex items-center gap-2">
               <Button
                 variant="primary"
@@ -169,13 +170,26 @@ export const Header: React.FC = () => {
               >
                 Subscribe
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                className="h-8 md:h-9 text-[12px] md:text-[13px] px-3.5 md:px-4 rounded-md font-semibold border-[#E5E7EB] text-[#0D0D0F] hover:bg-slate-100 transition-colors"
-              >
-                Login
-              </Button>
+              <Show when="signed-out">
+                <SignInButton mode="modal">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 md:h-9 text-[12px] md:text-[13px] px-3.5 md:px-4 rounded-md font-semibold border-[#E5E7EB] text-[#0D0D0F] hover:bg-slate-100 transition-colors"
+                  >
+                    Login
+                  </Button>
+                </SignInButton>
+              </Show>
+              <Show when="signed-in">
+                <UserButton
+                  appearance={{
+                    elements: {
+                      avatarBox: "w-8 h-8 rounded-full ring-2 ring-[#0D0D0F]/10",
+                    },
+                  }}
+                />
+              </Show>
             </div>
           </div>
         </div>
