@@ -104,7 +104,7 @@ export const Header: React.FC = () => {
             <div className="flex items-center gap-6 md:gap-8">
               <Link href="/" className="flex items-center gap-1.5 group">
                 <span className="text-2xl md:text-3xl font-extrabold tracking-tight text-[#0D0D0F] font-sans">
-                  NewsLens
+                  Veritas
                 </span>
                 <span className="text-xs font-semibold text-[#6E7280] self-end mb-1">
                   News

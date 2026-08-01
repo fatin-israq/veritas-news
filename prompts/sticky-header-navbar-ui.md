@@ -1,7 +1,7 @@
 # Implementation Prompt: Sticky Header & Navbar UI Refinement
 
 ## Goal
-Refine the **NewsLens Header** component to relocate the "Subscribe" and "Login" action buttons into the main navigation bar. Implement a smart sticky header that stays fixed at the top of the screen during scrolling on both mobile and desktop views: hiding the top utility bar (browser extension bar) when scrolling down, and revealing it again smoothly when scrolling up.
+Refine the **Veritas News Header** component to relocate the "Subscribe" and "Login" action buttons into the main navigation bar. Implement a smart sticky header that stays fixed at the top of the screen during scrolling on both mobile and desktop views: hiding the top utility bar (browser extension bar) when scrolling down, and revealing it again smoothly when scrolling up.
 
 ---
 

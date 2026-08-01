@@ -9,8 +9,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "NewsLens — Balanced news coverage, powered by AI",
-  description: "NewsLens collects real news articles, analyzes sentiment and political framing with AI, and displays reader-friendly insights.",
+  title: "Veritas News — Balanced news coverage, powered by AI",
+  description: "Veritas News collects real news articles, analyzes sentiment and political framing with AI, and displays reader-friendly insights.",
 };
 
 export default function RootLayout({

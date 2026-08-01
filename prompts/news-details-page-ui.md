@@ -1,7 +1,7 @@
-# Implementation Prompt: NewsLens News Details Page UI
+# Implementation Prompt: Veritas News News Details Page UI
 
 ## Goal
-Implement the pixel-perfect **NewsLens News Details Page UI** based on the attached UI reference image. The page features the top navigation bar, article breadcrumbs/meta headers, action bar (Save, Share), full-width main hero image with caption, inline bias distribution spectrum bar, detailed article body paragraphs, a 2-column "Related Stories" grid, an interactive right sidebar with "Bias Analysis", "AI Summary", and "Source Breakdown", a newsletter subscription banner, and the dark footer.
+Implement the pixel-perfect **Veritas News News Details Page UI** based on the attached UI reference image. The page features the top navigation bar, article breadcrumbs/meta headers, action bar (Save, Share), full-width main hero image with caption, inline bias distribution spectrum bar, detailed article body paragraphs, a 2-column "Related Stories" grid, an interactive right sidebar with "Bias Analysis", "AI Summary", and "Source Breakdown", a newsletter subscription banner, and the dark footer.
 
 ---
 

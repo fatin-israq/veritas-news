@@ -1,7 +1,7 @@
-# Implementation Prompt: App Design System (NewsLens)
+# Implementation Prompt: App Design System (Veritas News)
 
 ## Goal
-Implement the core design system for **NewsLens** based on the provided UI reference sheet. This includes setting up design tokens (colors, typography, spacing scale, border radii, shadows), integration of the `Poppins` Google font via `next/font/google`, creation of core UI components (`Button`, `Chip`, `BiasMeter`, `NewsCard`), and presenting a design system spec showcase on the home page (`app/page.tsx`).
+Implement the core design system for **Veritas News** based on the provided UI reference sheet. This includes setting up design tokens (colors, typography, spacing scale, border radii, shadows), integration of the `Poppins` Google font via `next/font/google`, creation of core UI components (`Button`, `Chip`, `BiasMeter`, `NewsCard`), and presenting a design system spec showcase on the home page (`app/page.tsx`).
 
 ---
 

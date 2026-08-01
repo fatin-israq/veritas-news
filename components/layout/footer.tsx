@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-5 space-y-3">
             <div className="flex items-center gap-1.5">
               <span className="text-2xl md:text-3xl font-extrabold tracking-tight text-white font-sans">
-                NewsLens
+                Veritas
               </span>
               <span className="text-xs font-semibold text-neutral-400 self-end mb-1">
                 News
@@ -148,7 +148,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Copyright Line */}
         <div className="pt-6 border-t border-neutral-800 text-[11px] text-neutral-500 font-medium">
-          © 2026 NewsLens News. All rights reserved.
+          © 2026 Veritas News. All rights reserved.
         </div>
       </div>
     </footer>

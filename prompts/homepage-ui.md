@@ -1,7 +1,7 @@
-# Implementation Prompt: NewsLens Homepage UI
+# Implementation Prompt: Veritas News Homepage UI
 
 ## Goal
-Implement the pixel-perfect **NewsLens Homepage UI** based on the provided reference screenshot. The page will feature a top utility bar, main brand navigation header, horizontal topic filter bar, a "Top News" section with a 3-column responsive grid of news cards displaying AI bias spectrum breakdown and source counts, and a complete dark footer.
+Implement the pixel-perfect **Veritas News Homepage UI** based on the provided reference screenshot. The page will feature a top utility bar, main brand navigation header, horizontal topic filter bar, a "Top News" section with a 3-column responsive grid of news cards displaying AI bias spectrum breakdown and source counts, and a complete dark footer.
 
 ---
 
@@ -31,7 +31,7 @@ Implement the pixel-perfect **NewsLens Homepage UI** based on the provided refer
 
 2. **Main Navigation Header**:
    - Clean white background header with subtle bottom border.
-   - Left: **NewsLens** logo with modern bold serif/sans typeface and red accent dot.
+   - Left: **Veritas News** logo with modern bold serif/sans typeface and red accent dot.
    - Center navigation menu:
      - `Home` (Active tab with bottom indicator / bold font)
      - `For You` (With a red asterisk `*` badge)
@@ -71,13 +71,13 @@ Implement the pixel-perfect **NewsLens Homepage UI** based on the provided refer
 6. **Footer Section**:
    - Full-width dark background `#0D0D0F` with white/gray typography.
    - Top layout:
-     - **NewsLens** brand logo, slogan "Balanced news coverage powered by AI."
+     - **Veritas News** brand logo, slogan "Balanced news coverage powered by AI."
      - Navigation columns:
        - **Company**: About, Careers, Press, Contact
        - **Help**: Help Center, Guides, Privacy Policy, Terms of Service
        - **Connect**: X (Twitter), LinkedIn, YouTube, Play icons
    - Bottom layout:
-     - Divider line and copyright notice: `© 2026 NewsLens. All rights reserved.`
+     - Divider line and copyright notice: `© 2026 Veritas News. All rights reserved.`
 
 ---
 
