@@ -6,7 +6,9 @@ import { useAuth, useUser } from "@clerk/nextjs";
 import posthog from "posthog-js";
 import { PostHogProvider as PostHogJSProvider } from "posthog-js/react";
 
-const posthogKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
+const posthogKey =
+  process.env.NEXT_PUBLIC_POSTHOG_KEY ||
+  process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
 
 if (typeof window !== "undefined" && posthogKey && !posthog.__loaded) {
   posthog.init(posthogKey, {
