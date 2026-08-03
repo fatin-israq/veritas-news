@@ -163,7 +163,7 @@ Implement the complete manual scraping pipeline (`POST /api/scrape`) for Veritas
    ```bash
    curl -X POST http://localhost:3000/api/scrape \
      -H "Content-Type: application/json" \
-     -H "x-veritas-admin-secret: <VERITAS_ADMIN_SECRET>" \
+     -H "x_veritas_admin_secret: <VERITAS_ADMIN_SECRET>" \
      -d '{"limitPerSource": 2}'
    ```
 5. Observe server terminal logs for step-by-step progress output.

@@ -171,7 +171,7 @@ Enable pgvector support in Supabase, update the database schema and types to sup
    ```bash
    curl -X POST http://localhost:3000/api/analyze \
      -H "Content-Type: application/json" \
-     -H "x-veritas-admin-secret: asdfjkhaslkdfj" \
+     -H "x_veritas_admin_secret: asdfjkhaslkdfj" \
      -d '{"limit": 5}'
    ```
 3. Inspect database to confirm `embedding` vector values are stored in `article_analyses`:

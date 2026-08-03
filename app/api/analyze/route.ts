@@ -4,10 +4,14 @@ import { runPendingAnalysisPipeline } from '@/lib/ai/pipeline';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
-  // 1. Authenticate using x-veritas-admin-secret
-  const adminSecret = request.headers.get('x-veritas-admin-secret');
+  // 1. Authenticate using x_veritas_admin_secret or x-veritas-admin-secret
+  const adminSecret =
+    request.headers.get('x_veritas_admin_secret') ||
+    request.headers.get('x-veritas-admin-secret');
   const expectedSecret =
-    process.env.VERITAS_ADMIN_SECRET || process.env['x-veritas-admin-secret'];
+    process.env.VERITAS_ADMIN_SECRET ||
+    process.env.x_veritas_admin_secret ||
+    process.env['x-veritas-admin-secret'];
 
   if (!expectedSecret || adminSecret !== expectedSecret) {
     return NextResponse.json(

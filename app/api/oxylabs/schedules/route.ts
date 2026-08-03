@@ -34,13 +34,17 @@ export async function GET() {
  */
 export async function POST(request: Request) {
   // 1. Admin secret security check (AGENTS.md Section 15)
-  const adminSecretHeader = request.headers.get('x-veritas-admin-secret');
+  const adminSecretHeader =
+    request.headers.get('x_veritas_admin_secret') ||
+    request.headers.get('x-veritas-admin-secret');
   const expectedSecret =
-    process.env.VERITAS_ADMIN_SECRET || process.env['x-veritas-admin-secret'];
+    process.env.VERITAS_ADMIN_SECRET ||
+    process.env.x_veritas_admin_secret ||
+    process.env['x-veritas-admin-secret'];
 
   if (!expectedSecret || adminSecretHeader !== expectedSecret) {
     return NextResponse.json(
-      { error: 'Unauthorized: Invalid or missing x-veritas-admin-secret header' },
+      { error: 'Unauthorized: Invalid or missing admin secret header' },
       { status: 401 }
     );
   }

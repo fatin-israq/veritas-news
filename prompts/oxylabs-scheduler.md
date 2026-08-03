@@ -147,7 +147,7 @@ Implement the complete Oxylabs Scheduler integration with Vercel Cron for automa
 1. **Sync Schedules**:
    ```bash
    curl -X POST http://localhost:3000/api/oxylabs/schedules \
-     -H "x-veritas-admin-secret: veritas-local-admin-secret"
+     -H "x_veritas_admin_secret: veritas-local-admin-secret"
    ```
 2. **List Schedules**:
    ```bash
@@ -156,7 +156,7 @@ Implement the complete Oxylabs Scheduler integration with Vercel Cron for automa
 3. **Process Scheduled Results**:
    ```bash
    curl -X POST http://localhost:3000/api/oxylabs/scheduled-results/process \
-     -H "x-veritas-admin-secret: veritas-local-admin-secret"
+     -H "x_veritas_admin_secret: veritas-local-admin-secret"
    ```
 4. **Trigger Cron Pipeline**:
    ```bash

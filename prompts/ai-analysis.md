@@ -142,7 +142,7 @@ Implement the production-grade AI article analysis pipeline for Veritas News. Th
    ```bash
    curl -X POST http://localhost:3000/api/analyze \
      -H "Content-Type: application/json" \
-     -H "x-veritas-admin-secret: asdfjkhaslkdfj" \
+     -H "x_veritas_admin_secret: asdfjkhaslkdfj" \
      -d '{"limit": 2}'
    ```
    Expect: `200 OK` with summary JSON response showing `analyzed_count: 2`.
