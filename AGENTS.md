@@ -441,19 +441,19 @@ Do not overcomplicate manual test commands unless the implementation truly needs
 
 # 18. Oxylabs Scheduler
 
-Use Oxylabs Scheduler to run hourly scraping for active source homepages stored in Supabase.
+Use Oxylabs Scheduler to run scraping every two days for active source homepages stored in Supabase.
 
 Scheduler should scrape source homepages only.
 
 ## Oxylabs Scheduler API
 
-Before implementing Oxylabs Scheduler, always fetch the current API documentation from `https://developers.oxylabs.io/products/web-scraper-api/features/scheduler`. Do not assume endpoint paths, request body fields, or response field names from memory â€” consult the live docs first.
+Before implementing Oxylabs Scheduler, always fetch the current API documentation from `https://developers.oxylabs.io/products/web-scraper-api/features/scheduler`. Do not assume endpoint paths, request body fields, or response field names from memory — consult the live docs first.
 
-## Large integer precision â€” critical
+## Large integer precision — critical
 
 Oxylabs `schedule_id` and job `id` values are large 64-bit integers that exceed JavaScript's `Number.MAX_SAFE_INTEGER`. Parsing them with `JSON.parse` silently corrupts the last digits, producing a wrong ID that Oxylabs will not recognise.
 
-Always read these IDs from the raw HTTP response text before any `JSON.parse` call â€” use string extraction or regex on the raw text to capture the exact digit sequence. Never convert a parsed JavaScript number back to a string; precision is already lost at parse time.
+Always read these IDs from the raw HTTP response text before any `JSON.parse` call — use string extraction or regex on the raw text to capture the exact digit sequence. Never convert a parsed JavaScript number back to a string; precision is already lost at parse time.
 
 ## Use /runs not /jobs for processing
 
@@ -463,7 +463,7 @@ Always read these IDs from the raw HTTP response text before any `JSON.parse` ca
 
 ## Orphan schedule deactivation
 
-Each call to the sync route that creates a new schedule leaves behind old schedules on Oxylabs if DB rows were deleted and re-created. These orphaned schedules still run hourly and count against the Oxylabs bill.
+Each call to the sync route that creates a new schedule leaves behind old schedules on Oxylabs if DB rows were deleted and re-created. These orphaned schedules still run every two days and count against the Oxylabs bill.
 
 The sync route must:
 
@@ -475,8 +475,8 @@ The sync route must:
 
 Creating Oxylabs schedules and configuring Vercel Cron are two independent one-time steps. Neither one triggers the other.
 
-- `POST /api/oxylabs/schedules` â€” tells Oxylabs what to scrape hourly. Done once per source set.
-- Vercel Cron config â€” tells Vercel to call `/api/cron/pipeline` at :15 past every hour. Done once via `vercel.json`.
+- `POST /api/oxylabs/schedules` — tells Oxylabs what to scrape every two days. Done once per source set.
+- Vercel Cron config — tells Vercel to call `/api/cron/pipeline` 15 minutes after the scheduled Oxylabs run every two days (e.g. `15 6 */2 * *`). Done once via `vercel.json`.
 
 Both must be completed for the pipeline to be fully automatic. Until Vercel Cron is configured, the process route must be called manually.
 
@@ -485,11 +485,11 @@ Articles only appear on the homepage after `analyzed_at` is set. Until analysis 
 Process scheduled results by running the **scrape-to-insert pipeline** (section 9), with these scheduler differences:
 
 - Create or update Oxylabs schedules from active source homepages before processing.
-- The homepage HTML comes from completed Oxylabs job results â€” fetch via `/runs`, use only `result_status === 'done'` (see above), and parse that HTML instead of doing a live homepage fetch.
+- The homepage HTML comes from completed Oxylabs job results — fetch via `/runs`, use only `result_status === 'done'` (see above), and parse that HTML instead of doing a live homepage fetch.
 - Do not save raw scheduled homepage results as articles.
 - Do not duplicate pipeline logic inside Scheduler; reuse the same validation, cleanup, dedupe, **URL existence check**, and **run logging** as manual scraping (section 9).
 
-## Automatic hourly pipeline
+## Automatic pipeline (every two days)
 
 Scheduled result processing and AI analysis must run automatically after every Oxylabs run.
 
@@ -497,12 +497,12 @@ Do not require manual intervention after schedules are created.
 
 The automatic pipeline flow is:
 
-1. Oxylabs Scheduler runs its jobs at the top of every hour.
+1. Oxylabs Scheduler runs its jobs every two days.
 2. A Vercel Cron Job fires 15 minutes later to give Oxylabs time to finish.
 3. The cron triggers `/api/cron/pipeline`, which runs both steps in sequence.
-4. Step one: process scheduled results â€” fetch completed Oxylabs job HTML, extract candidate links, reject non-article URLs, dedupe, scrape article detail pages, validate, and insert valid articles.
+4. Step one: process scheduled results — fetch completed Oxylabs job HTML, extract candidate links, reject non-article URLs, dedupe, scrape article detail pages, validate, and insert valid articles.
 5. Step two: immediately run AI analysis on all newly inserted articles that are still pending analysis.
-6. If step one fails, step two must still run â€” there may be pre-existing unanalyzed articles.
+6. If step one fails, step two must still run — there may be pre-existing unanalyzed articles.
 7. Log progress and completion for both steps.
 
 The cron route is internal only and must not be callable by browsers or users.
@@ -515,11 +515,11 @@ Do not use `VERITAS_ADMIN_SECRET` to protect the cron route. Do not add `CRON_SE
 
 When implementing Oxylabs Scheduler, always deliver all parts together:
 
-- Sync schedules route â€” creates one Oxylabs schedule per active source
-- List schedules route â€” reads stored schedule rows
-- Manual process route â€” allows on-demand processing
-- Vercel Cron config â€” registers the automatic hourly trigger
-- Cron pipeline route â€” chains scheduled result processing then AI analysis
+- Sync schedules route — creates one Oxylabs schedule per active source
+- List schedules route — reads stored schedule rows
+- Manual process route — allows on-demand processing
+- Vercel Cron config — registers the automatic trigger (every two days)
+- Cron pipeline route — chains scheduled result processing then AI analysis
 
 Scheduler processing must use the same validation, cleanup, dedupe, and console summary logging as manual scraping.
 

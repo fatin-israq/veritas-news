@@ -1,5 +1,3 @@
-import type { Source } from '../supabase/types';
-
 export interface OxylabsQueryResponse {
   results: Array<{
     content: string;
