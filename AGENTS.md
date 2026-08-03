@@ -653,6 +653,8 @@ Canonical list lives in `.env.example`. Only `NEXT_PUBLIC_*` values may reach br
 | `VERITAS_ADMIN_SECRET`                                                        | Shared secret for `x-veritas-admin-secret` on action routes (section 15)                | server only     |
 | `ANALYSIS_BATCH_SIZE`                                                         | Optional; articles analyzed per batch (default 5)                                       | server only     |
 | `CRON_SECRET`                                                                 | Protects `GET /api/cron/pipeline`; injected by Vercel, not in `.env.local` (section 18) | server only     |
+| `NEXT_PUBLIC_POSTHOG_KEY`                                                     | PostHog project API key for client-side product analytics                               | client + server |
+| `NEXT_PUBLIC_POSTHOG_HOST`                                                    | PostHog UI host for links; ingestion goes through the `/ingest` rewrite                 | client + server |
 
 Keep this table and `.env.example` in sync when variables change.
 

@@ -16,6 +16,7 @@ import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 import { getArticleById, getRelatedArticles } from "@/lib/supabase/queries/articles";
 import { BiasMeter } from "@/components/ui/bias-meter";
+import { BiasMethodology } from "@/components/ui/bias-methodology";
 import type { ArticleWithAnalysis } from "@/lib/supabase/types";
 
 export const revalidate = 60;
@@ -227,7 +228,6 @@ export default async function NewsDetailsPage({ params }: Props) {
               <div className="flex items-center justify-between text-xs font-semibold text-[#0D0D0F]">
                 <div className="flex items-center gap-1.5">
                   <span>AI Bias Distribution & Framing</span>
-                  <Info className="w-3.5 h-3.5 text-[#6E7280]" />
                 </div>
                 <span className="text-[11px] text-[#6E7280] font-normal">
                   Confidence: {confidencePct}%
@@ -240,6 +240,14 @@ export default async function NewsDetailsPage({ params }: Props) {
                 centerPercentage={centerPct}
                 rightPercentage={rightPct}
                 showScale={true}
+              />
+
+              <BiasMethodology
+                articleId={id}
+                sourceName={sourceName}
+                biasLabel={biasLabel}
+                confidencePercentage={confidencePct}
+                modelName={modelName}
               />
             </div>
 

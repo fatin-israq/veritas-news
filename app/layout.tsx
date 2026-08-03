@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { PostHogProvider } from "@/components/analytics/posthog-provider";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -26,7 +27,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#F8F8F6] text-[#0D0D0F]">
         <ClerkProvider>
-          {children}
+          <PostHogProvider>
+            {children}
+          </PostHogProvider>
         </ClerkProvider>
       </body>
     </html>
