@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="vn-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#141417" />
+      <stop offset="100%" stop-color="#09090B" />
+    </linearGradient>
+
+    <!-- Left Wing Gradient: Clean White to Cool Slate -->
+    <linearGradient id="vn-left-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#94A3B8" />
+    </linearGradient>
+
+    <!-- Right Wing Gradient: Crimson Red Power Beam -->
+    <linearGradient id="vn-right-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EF4444" />
+      <stop offset="50%" stop-color="#B42318" />
+      <stop offset="100%" stop-color="#7F1D1D" />
+    </linearGradient>
+
+    <!-- Center Fold Prism Accent -->
+    <linearGradient id="vn-prism" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FCA5A5" />
+      <stop offset="100%" stop-color="#DC2626" />
+    </linearGradient>
+
+    <!-- Subtle Glow Shadow -->
+    <filter id="vn-glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#B42318" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Outer Rounded Square Container -->
+  <rect width="512" height="512" rx="120" fill="url(#vn-bg)" />
+  <rect width="500" height="500" x="6" y="6" rx="114" stroke="#FFFFFF" stroke-opacity="0.08" stroke-width="6" />
+
+  <!-- Veritas Emblem Mark -->
+  <g filter="url(#vn-glow)">
+    <!-- Left Wing (Pillar of Truth) -->
+    <path d="M120 120 L236 384 C244 402 268 402 276 384 L296 338 L196 120 Z" fill="url(#vn-left-wing)" />
+    
+    <!-- Right Wing (Editorial Crimson Focus) -->
+    <path d="M392 120 L276 384 C268 402 244 402 236 384 L216 338 L316 120 Z" fill="url(#vn-right-wing)" />
+
+    <!-- Overlapping Analytical Spectrum Beam (News Page Fold) -->
+    <path d="M208 190 L360 120 L392 120 L228 196 Z" fill="url(#vn-prism)" opacity="0.95" />
+    <path d="M228 240 L340 188 L358 188 L244 246 Z" fill="#F87171" opacity="0.8" />
+
+    <!-- Veritas Signature Accent Dot -->
+    <circle cx="396" cy="116" r="26" fill="#EF4444" />
+    <circle cx="396" cy="116" r="12" fill="#FFFFFF" />
+  </g>
+</svg>

@@ -13,6 +13,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "Veritas News — Balanced news coverage, powered by AI",
   description: "Veritas News collects real news articles, analyzes sentiment and political framing with AI, and displays reader-friendly insights.",
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

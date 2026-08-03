@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { VeritasIcon } from "@/components/ui/veritas-icon";
 
 export const Footer: React.FC = () => {
   return (
@@ -9,13 +10,16 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 justify-between">
           {/* Brand Info */}
           <div className="md:col-span-5 space-y-3">
-            <div className="flex items-center gap-1.5">
-              <span className="text-2xl md:text-3xl font-extrabold tracking-tight text-white font-sans">
-                Veritas
-              </span>
-              <span className="text-xs font-semibold text-neutral-400 self-end mb-1">
-                News
-              </span>
+            <div className="flex items-center gap-2">
+              <VeritasIcon size={32} className="w-7 h-7 md:w-8 md:h-8" />
+              <div className="flex items-baseline gap-1">
+                <span className="text-2xl md:text-3xl font-extrabold tracking-tight text-white font-sans">
+                  Veritas
+                </span>
+                <span className="text-xs font-semibold text-neutral-400">
+                  News
+                </span>
+              </div>
             </div>
             <p className="text-xs text-neutral-400 max-w-[240px] leading-relaxed">
               Balanced news coverage powered by AI.

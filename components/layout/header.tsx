@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
+import { VeritasIcon } from "@/components/ui/veritas-icon";
 
 export const Header: React.FC = () => {
   const [theme, setTheme] = useState<"light" | "dark" | "auto">("light");
@@ -103,14 +104,16 @@ export const Header: React.FC = () => {
           <div className="max-w-[1280px] mx-auto flex items-center justify-between gap-4">
             {/* Left: Logo & Navigation Links */}
             <div className="flex items-center gap-6 md:gap-8">
-              <Link href="/" className="flex items-center gap-1.5 group">
-                <span className="text-2xl md:text-3xl font-extrabold tracking-tight text-[#0D0D0F] font-sans">
-                  Veritas
-                </span>
-                <span className="text-xs font-semibold text-[#6E7280] self-end mb-1">
-                  News
-                </span>
-                <span className="w-2 h-2 rounded-full bg-[#B42318] self-end mb-1.5 ml-0.5"></span>
+              <Link href="/" className="flex items-center gap-2 group">
+                <VeritasIcon size={32} className="w-7 h-7 md:w-8 md:h-8 transition-transform group-hover:scale-105" />
+                <div className="flex items-baseline gap-1">
+                  <span className="text-2xl md:text-3xl font-extrabold tracking-tight text-[#0D0D0F] font-sans">
+                    Veritas
+                  </span>
+                  <span className="text-xs font-semibold text-[#6E7280]">
+                    News
+                  </span>
+                </div>
               </Link>
 
               <nav className="hidden md:flex items-center gap-6 text-[14px] font-semibold">
