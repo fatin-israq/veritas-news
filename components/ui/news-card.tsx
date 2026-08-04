@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { Info } from "lucide-react";
+import posthog from "posthog-js";
 import { BiasMeter } from "./bias-meter";
 
 export interface NewsCardProps {
@@ -18,6 +19,12 @@ export interface NewsCardProps {
   rightPercentage?: number;
   sourcesCount?: number | string;
   className?: string;
+  // Analytics: enriched properties for the `article_opened` event.
+  sentimentLabel?: string;
+  biasLabel?: string;
+  confidence?: number;
+  publishedAt?: string;
+  positionInFeed?: number;
 }
 
 export const NewsCard: React.FC<NewsCardProps> = ({
@@ -33,10 +40,30 @@ export const NewsCard: React.FC<NewsCardProps> = ({
   rightPercentage = 25,
   sourcesCount = "12 sources",
   className = "",
+  sentimentLabel,
+  biasLabel,
+  confidence,
+  publishedAt,
+  positionInFeed,
 }) => {
   const displayLocation = location || source || "Global";
   const formattedSources =
     typeof sourcesCount === "number" ? `${sourcesCount} sources` : sourcesCount;
+
+  // Fires before navigation so we can rank articles by reader interest with
+  // human-readable, segmentable properties (no Supabase join needed downstream).
+  const handleOpen = () => {
+    posthog.capture("article_opened", {
+      article_id: id,
+      article_title: title,
+      source_name: source ?? category,
+      sentiment_label: sentimentLabel,
+      bias_label: biasLabel,
+      confidence,
+      published_at: publishedAt,
+      position_in_feed: positionInFeed,
+    });
+  };
 
   return (
     <div
@@ -46,6 +73,8 @@ export const NewsCard: React.FC<NewsCardProps> = ({
       <Link
         href={`/news/${id}`}
         prefetch={false}
+        onClick={handleOpen}
+        data-attr="news-card-link"
         className="flex flex-col flex-1 cursor-pointer"
       >
         {/* Thumbnail Image Container */}
@@ -62,6 +91,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({
               e.preventDefault();
               e.stopPropagation();
             }}
+            data-attr="news-card-info"
             className="absolute top-2.5 right-2.5 p-1 bg-black/40 hover:bg-black/70 backdrop-blur-sm text-white rounded-full transition-colors z-10"
             title="Article breakdown info"
           >

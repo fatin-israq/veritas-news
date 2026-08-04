@@ -40,6 +40,10 @@ function normalizeArticle(article: GenericArticle) {
       centerPercentage: dbArticle.analysis?.center_percentage ?? 34,
       rightPercentage: dbArticle.analysis?.right_percentage ?? 33,
       sourcesCount: dbArticle.source?.name || "1 source",
+      sentimentLabel: dbArticle.analysis?.sentiment_label,
+      biasLabel: dbArticle.analysis?.bias_label,
+      confidence: dbArticle.analysis?.confidence,
+      publishedAt: dbArticle.published_at,
     };
   } else {
     const fallback = article as StandardArticleItem;
@@ -54,6 +58,10 @@ function normalizeArticle(article: GenericArticle) {
       centerPercentage: fallback.centerPercentage ?? 34,
       rightPercentage: fallback.rightPercentage ?? 33,
       sourcesCount: fallback.sourcesCount ?? "1 source",
+      sentimentLabel: undefined,
+      biasLabel: undefined,
+      confidence: undefined,
+      publishedAt: undefined,
     };
   }
 }
@@ -135,7 +143,7 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
     <div ref={containerRef} className="w-full space-y-8">
       {/* News Cards Grid: Single column on mobile (6 per page), 3 columns on desktop (12 per page) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 transition-all duration-300 ease-in-out">
-        {currentArticles.map((article) => {
+        {currentArticles.map((article, idx) => {
           const item = normalizeArticle(article);
           return (
             <NewsCard
@@ -150,6 +158,11 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
               centerPercentage={item.centerPercentage}
               rightPercentage={item.rightPercentage}
               sourcesCount={item.sourcesCount}
+              sentimentLabel={item.sentimentLabel}
+              biasLabel={item.biasLabel}
+              confidence={item.confidence}
+              publishedAt={item.publishedAt}
+              positionInFeed={startIndex + idx + 1}
             />
           );
         })}
