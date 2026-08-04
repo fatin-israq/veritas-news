@@ -190,6 +190,7 @@ export default async function NewsDetailsPage({ params }: Props) {
                       href={originalUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      data-attr="original-source-link"
                       className="text-[#1D4ED8] dark:text-[#60A5FA] hover:underline flex items-center gap-1 font-medium"
                     >
                       Original Source <ExternalLink className="w-3 h-3" />
@@ -200,11 +201,11 @@ export default async function NewsDetailsPage({ params }: Props) {
 
               {/* Action Buttons */}
               <div className="flex items-center gap-4 text-[#0D0D0F] dark:text-[#F4F4F5] font-medium text-xs">
-                <button className="flex items-center gap-1 hover:text-[#1D4ED8] dark:hover:text-[#60A5FA] transition-colors cursor-pointer">
+                <button data-attr="article-save" className="flex items-center gap-1 hover:text-[#1D4ED8] dark:hover:text-[#60A5FA] transition-colors cursor-pointer">
                   <Bookmark className="w-3.5 h-3.5" />
                   <span>Save</span>
                 </button>
-                <button className="flex items-center gap-1 hover:text-[#1D4ED8] dark:hover:text-[#60A5FA] transition-colors cursor-pointer">
+                <button data-attr="article-share" className="flex items-center gap-1 hover:text-[#1D4ED8] dark:hover:text-[#60A5FA] transition-colors cursor-pointer">
                   <Share2 className="w-3.5 h-3.5" />
                   <span>Share</span>
                 </button>
@@ -270,6 +271,7 @@ export default async function NewsDetailsPage({ params }: Props) {
                     <Link
                       key={story.id}
                       href={`/news/${story.id}`}
+                      data-attr="related-article-link"
                       className="bg-white dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-xl p-3 flex items-center gap-3 hover:shadow-sm transition-shadow cursor-pointer group"
                     >
                       <div className="w-20 h-20 rounded-lg overflow-hidden bg-slate-100 dark:bg-zinc-800 flex-shrink-0">
@@ -429,6 +431,7 @@ export default async function NewsDetailsPage({ params }: Props) {
             />
             <Button
               variant="primary"
+              data-attr="newsletter-subscribe"
               className="bg-[#0D0D0F] dark:bg-[#F4F4F5] text-white dark:text-[#0D0D0F] px-5 py-2 rounded-lg font-semibold text-xs md:text-sm hover:bg-black dark:hover:bg-white transition-colors whitespace-nowrap"
             >
               Subscribe

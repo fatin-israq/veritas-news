@@ -126,6 +126,7 @@ export const Header: React.FC = () => {
               <nav className="hidden md:flex items-center gap-6 text-[14px] font-semibold">
                 <button
                   onClick={() => setActiveNav("Home")}
+                  data-attr="nav-home"
                   className={`transition-colors pb-0.5 ${
                     activeNav === "Home"
                       ? "text-[#0D0D0F] dark:text-[#F4F4F5] border-b-2 border-[#0D0D0F] dark:border-[#F4F4F5]"
@@ -137,6 +138,7 @@ export const Header: React.FC = () => {
 
                 <button
                   onClick={() => setActiveNav("For You")}
+                  data-attr="nav-for-you"
                   className={`flex items-center gap-0.5 transition-colors pb-0.5 ${
                     activeNav === "For You"
                       ? "text-[#0D0D0F] dark:text-[#F4F4F5] border-b-2 border-[#0D0D0F] dark:border-[#F4F4F5]"
@@ -149,6 +151,7 @@ export const Header: React.FC = () => {
 
                 <button
                   onClick={() => setActiveNav("Local")}
+                  data-attr="nav-local"
                   className={`transition-colors pb-0.5 ${
                     activeNav === "Local"
                       ? "text-[#0D0D0F] dark:text-[#F4F4F5] border-b-2 border-[#0D0D0F] dark:border-[#F4F4F5]"
@@ -160,6 +163,7 @@ export const Header: React.FC = () => {
 
                 <button
                   onClick={() => setActiveNav("Blindspot")}
+                  data-attr="nav-blindspot"
                   className={`transition-colors pb-0.5 ${
                     activeNav === "Blindspot"
                       ? "text-[#0D0D0F] dark:text-[#F4F4F5] border-b-2 border-[#0D0D0F] dark:border-[#F4F4F5]"
@@ -176,6 +180,7 @@ export const Header: React.FC = () => {
               <Button
                 variant="primary"
                 size="sm"
+                data-attr="header-subscribe"
                 className="h-8 md:h-9 text-[12px] md:text-[13px] px-3.5 md:px-4 rounded-md font-semibold bg-[#0D0D0F] dark:bg-[#F4F4F5] text-white dark:text-[#0D0D0F] hover:bg-black dark:hover:bg-white transition-colors"
               >
                 Subscribe
@@ -185,6 +190,7 @@ export const Header: React.FC = () => {
                   <Button
                     variant="outline"
                     size="sm"
+                    data-attr="header-login"
                     className="h-8 md:h-9 text-[12px] md:text-[13px] px-3.5 md:px-4 rounded-md font-semibold border-[#E5E7EB] dark:border-[#27272A] text-[#0D0D0F] dark:text-[#F4F4F5] hover:bg-slate-100 dark:hover:bg-[#27272A] transition-colors"
                   >
                     Login
@@ -211,6 +217,7 @@ export const Header: React.FC = () => {
               {categories.map((cat) => (
                 <button
                   key={cat}
+                  data-attr="category-pill"
                   className="flex items-center gap-1.5 px-3 py-1.5 bg-[#F4F4F6] dark:bg-[#18181B] hover:bg-[#E5E7EB] dark:hover:bg-[#27272A] text-[#0D0D0F] dark:text-[#F4F4F5] text-[12px] font-semibold rounded-lg whitespace-nowrap transition-colors flex-shrink-0"
                 >
                   <span>{cat}</span>
