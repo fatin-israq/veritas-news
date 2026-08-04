@@ -39,7 +39,7 @@ export const BiasMeter: React.FC<BiasMeterProps> = ({
         {centerWidth > 0 && (
           <div
             style={{ width: `${centerWidth}%` }}
-            className="bg-[#E5E7EB] text-[#0D0D0F] flex items-center justify-center px-1 text-[10px] md:text-[11px] font-bold truncate transition-all duration-300"
+            className="bg-[#E5E7EB] dark:bg-zinc-700 text-[#0D0D0F] dark:text-zinc-100 flex items-center justify-center px-1 text-[10px] md:text-[11px] font-bold truncate transition-all duration-300"
             title={`Center: ${centerPercentage}%`}
           >
             {centerWidth > 12 ? `Center ${centerPercentage}%` : `${centerPercentage}%`}
@@ -50,7 +50,7 @@ export const BiasMeter: React.FC<BiasMeterProps> = ({
         {rightWidth > 0 && (
           <div
             style={{ width: `${rightWidth}%` }}
-            className="bg-[#1D4ED8] text-white flex items-center justify-center px-1 text-[10px] md:text-[11px] font-bold truncate transition-all duration-300"
+            className="bg-[#1D4ED8] dark:bg-[#3B82F6] text-white flex items-center justify-center px-1 text-[10px] md:text-[11px] font-bold truncate transition-all duration-300"
             title={`Right: ${rightPercentage}%`}
           >
             {rightWidth > 10 ? `Right ${rightPercentage}%` : `${rightPercentage}%`}
@@ -59,7 +59,7 @@ export const BiasMeter: React.FC<BiasMeterProps> = ({
       </div>
 
       {showScale && (
-        <div className="flex justify-between text-[10px] text-[#6E7280] font-medium px-0.5">
+        <div className="flex justify-between text-[10px] text-[#6E7280] dark:text-[#A1A1AA] font-medium px-0.5">
           <span>0%</span>
           <span>50%</span>
           <span>100%</span>
@@ -68,3 +68,4 @@ export const BiasMeter: React.FC<BiasMeterProps> = ({
     </div>
   );
 };
+

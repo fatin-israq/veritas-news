@@ -158,7 +158,7 @@ export default async function Home() {
   const articlesToDisplay = hasLiveData ? dbArticles : fallbackArticles;
 
   return (
-    <div className="min-h-screen bg-[#F8F8F6] text-[#0D0D0F] font-sans antialiased flex flex-col justify-between">
+    <div className="min-h-screen bg-[#F8F8F6] dark:bg-[#09090B] text-[#0D0D0F] dark:text-[#F4F4F5] font-sans antialiased flex flex-col justify-between transition-colors duration-200">
       {/* Header Navigation & Category Filter */}
       <Header />
 
@@ -166,16 +166,16 @@ export default async function Home() {
       <main className="max-w-[1280px] mx-auto px-4 md:px-8 py-8 w-full flex-1">
         {/* Section Heading */}
         <div className="mb-6">
-          <h1 className="text-2xl md:text-3xl font-extrabold text-[#0D0D0F] tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-[#0D0D0F] dark:text-[#F4F4F5] tracking-tight">
             Top News
           </h1>
-          <p className="text-xs text-[#6E7280] mt-1">
+          <p className="text-xs text-[#6E7280] dark:text-[#A1A1AA] mt-1">
             Real-time news stories analyzed for political framing and sentiment.
           </p>
         </div>
 
         {dbError && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-lg text-xs text-red-700 dark:text-red-300">
             <strong>Supabase Query Notice:</strong> {dbError}
           </div>
         )}

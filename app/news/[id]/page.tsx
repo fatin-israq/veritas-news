@@ -150,14 +150,14 @@ export default async function NewsDetailsPage({ params }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F8F6] text-[#0D0D0F] font-sans antialiased flex flex-col justify-between">
+    <div className="min-h-screen bg-[#F8F8F6] dark:bg-[#09090B] text-[#0D0D0F] dark:text-[#F4F4F5] font-sans antialiased flex flex-col justify-between transition-colors duration-200">
       {/* Header Navigation */}
       <Header />
 
       {/* Main Content Layout Container */}
       <main className="max-w-[1280px] mx-auto px-4 md:px-8 py-8 w-full flex-1">
         {dbError && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-lg text-xs text-red-700 dark:text-red-300">
             <strong>Database Notice:</strong> {dbError}
           </div>
         )}
@@ -166,23 +166,23 @@ export default async function NewsDetailsPage({ params }: Props) {
           {/* LEFT COLUMN: Article Content (8 Cols) */}
           <div className="lg:col-span-8 space-y-6">
             {/* Meta Category & Source */}
-            <div className="text-xs font-semibold text-[#6E7280] tracking-wide flex items-center gap-2">
-              <span className="bg-[#0D0D0F] text-white px-2 py-0.5 rounded text-[11px] font-bold">
+            <div className="text-xs font-semibold text-[#6E7280] dark:text-[#A1A1AA] tracking-wide flex items-center gap-2">
+              <span className="bg-[#0D0D0F] dark:bg-[#F4F4F5] text-white dark:text-[#0D0D0F] px-2 py-0.5 rounded text-[11px] font-bold">
                 {sourceName}
               </span>
-              <span className="text-[#9CA3AF]">·</span>
+              <span className="text-[#9CA3AF] dark:text-zinc-600">·</span>
               <span>{publishedDate}</span>
             </div>
 
             {/* Main Article Headline */}
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0F] tracking-tight leading-[1.2]">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#0D0D0F] dark:text-[#F4F4F5] tracking-tight leading-[1.2]">
               {title}
             </h1>
 
             {/* Author Byline & Actions Row */}
-            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] pb-4 text-xs md:text-sm text-[#6E7280]">
+            <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E5E7EB] dark:border-[#27272A] pb-4 text-xs md:text-sm text-[#6E7280] dark:text-[#A1A1AA]">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="font-semibold text-[#0D0D0F]">Source: {sourceName}</span>
+                <span className="font-semibold text-[#0D0D0F] dark:text-[#F4F4F5]">Source: {sourceName}</span>
                 {originalUrl && (
                   <>
                     <span>|</span>
@@ -190,7 +190,7 @@ export default async function NewsDetailsPage({ params }: Props) {
                       href={originalUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#1D4ED8] hover:underline flex items-center gap-1 font-medium"
+                      className="text-[#1D4ED8] dark:text-[#60A5FA] hover:underline flex items-center gap-1 font-medium"
                     >
                       Original Source <ExternalLink className="w-3 h-3" />
                     </a>
@@ -199,12 +199,12 @@ export default async function NewsDetailsPage({ params }: Props) {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex items-center gap-4 text-[#0D0D0F] font-medium text-xs">
-                <button className="flex items-center gap-1 hover:text-[#1D4ED8] transition-colors">
+              <div className="flex items-center gap-4 text-[#0D0D0F] dark:text-[#F4F4F5] font-medium text-xs">
+                <button className="flex items-center gap-1 hover:text-[#1D4ED8] dark:hover:text-[#60A5FA] transition-colors cursor-pointer">
                   <Bookmark className="w-3.5 h-3.5" />
                   <span>Save</span>
                 </button>
-                <button className="flex items-center gap-1 hover:text-[#1D4ED8] transition-colors">
+                <button className="flex items-center gap-1 hover:text-[#1D4ED8] dark:hover:text-[#60A5FA] transition-colors cursor-pointer">
                   <Share2 className="w-3.5 h-3.5" />
                   <span>Share</span>
                 </button>
@@ -213,7 +213,7 @@ export default async function NewsDetailsPage({ params }: Props) {
 
             {/* Hero Image Container */}
             <div className="space-y-2">
-              <div className="w-full h-[280px] md:h-[420px] rounded-xl overflow-hidden bg-slate-100 relative border border-[#E5E7EB]">
+              <div className="w-full h-[280px] md:h-[420px] rounded-xl overflow-hidden bg-slate-100 dark:bg-zinc-800 relative border border-[#E5E7EB] dark:border-[#27272A]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={imageUrl}
@@ -224,12 +224,12 @@ export default async function NewsDetailsPage({ params }: Props) {
             </div>
 
             {/* Inline Bias Distribution Box */}
-            <div className="bg-[#F4F4F6] border border-[#E5E7EB] rounded-xl p-4 space-y-3">
-              <div className="flex items-center justify-between text-xs font-semibold text-[#0D0D0F]">
+            <div className="bg-[#F4F4F6] dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-xl p-4 space-y-3">
+              <div className="flex items-center justify-between text-xs font-semibold text-[#0D0D0F] dark:text-[#F4F4F5]">
                 <div className="flex items-center gap-1.5">
                   <span>AI Bias Distribution & Framing</span>
                 </div>
-                <span className="text-[11px] text-[#6E7280] font-normal">
+                <span className="text-[11px] text-[#6E7280] dark:text-[#A1A1AA] font-normal">
                   Confidence: {confidencePct}%
                 </span>
               </div>
@@ -252,7 +252,7 @@ export default async function NewsDetailsPage({ params }: Props) {
             </div>
 
             {/* Article Text Content */}
-            <article className="text-[15px] md:text-[16px] leading-[1.75] text-[#374151] space-y-5 pt-2">
+            <article className="text-[15px] md:text-[16px] leading-[1.75] text-[#374151] dark:text-[#D4D4D8] space-y-5 pt-2">
               {rawTextParagraphs.map((paragraph, idx) => (
                 <p key={idx}>{paragraph}</p>
               ))}
@@ -260,8 +260,8 @@ export default async function NewsDetailsPage({ params }: Props) {
 
             {/* Related Stories Section */}
             {relatedArticles.length > 0 && (
-              <div className="border-t border-[#E5E7EB] pt-8 mt-10">
-                <h2 className="text-xl font-bold text-[#0D0D0F] mb-6">
+              <div className="border-t border-[#E5E7EB] dark:border-[#27272A] pt-8 mt-10">
+                <h2 className="text-xl font-bold text-[#0D0D0F] dark:text-[#F4F4F5] mb-6">
                   Related Live Stories
                 </h2>
 
@@ -270,9 +270,9 @@ export default async function NewsDetailsPage({ params }: Props) {
                     <Link
                       key={story.id}
                       href={`/news/${story.id}`}
-                      className="bg-white border border-[#E5E7EB] rounded-xl p-3 flex items-center gap-3 hover:shadow-sm transition-shadow cursor-pointer group"
+                      className="bg-white dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-xl p-3 flex items-center gap-3 hover:shadow-sm transition-shadow cursor-pointer group"
                     >
-                      <div className="w-20 h-20 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0">
+                      <div className="w-20 h-20 rounded-lg overflow-hidden bg-slate-100 dark:bg-zinc-800 flex-shrink-0">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={story.image_url}
@@ -281,10 +281,10 @@ export default async function NewsDetailsPage({ params }: Props) {
                         />
                       </div>
                       <div className="flex-1 space-y-1">
-                        <div className="text-[11px] text-[#6E7280] font-medium">
+                        <div className="text-[11px] text-[#6E7280] dark:text-[#A1A1AA] font-medium">
                           <span>{story.source?.name || "News"}</span>
                         </div>
-                        <h3 className="text-xs font-bold text-[#0D0D0F] leading-snug line-clamp-2 group-hover:text-[#1D4ED8] transition-colors">
+                        <h3 className="text-xs font-bold text-[#0D0D0F] dark:text-[#F4F4F5] leading-snug line-clamp-2 group-hover:text-[#1D4ED8] dark:group-hover:text-[#60A5FA] transition-colors">
                           {story.title}
                         </h3>
                       </div>
@@ -298,22 +298,22 @@ export default async function NewsDetailsPage({ params }: Props) {
           {/* RIGHT COLUMN: AI Analysis & Breakdown Sidebar (4 Cols) */}
           <aside className="lg:col-span-4 space-y-6">
             {/* CARD 1: AI Framing & Bias Analysis */}
-            <div className="bg-white border border-[#E5E7EB] rounded-xl p-5 shadow-2xs space-y-4">
-              <div className="flex items-center justify-between border-b border-[#F4F4F6] pb-3">
+            <div className="bg-white dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-xl p-5 shadow-2xs space-y-4">
+              <div className="flex items-center justify-between border-b border-[#F4F4F6] dark:border-[#27272A] pb-3">
                 <div className="flex items-center gap-1.5">
-                  <Sparkles className="w-4 h-4 text-[#1D4ED8]" />
-                  <h3 className="text-sm font-bold text-[#0D0D0F]">AI Framing Analysis</h3>
+                  <Sparkles className="w-4 h-4 text-[#1D4ED8] dark:text-[#60A5FA]" />
+                  <h3 className="text-sm font-bold text-[#0D0D0F] dark:text-[#F4F4F5]">AI Framing Analysis</h3>
                 </div>
-                <Info className="w-4 h-4 text-[#6E7280]" />
+                <Info className="w-4 h-4 text-[#6E7280] dark:text-[#A1A1AA]" />
               </div>
 
               <div>
-                <div className="text-xs font-medium text-[#6E7280]">AI-Estimated Framing Label</div>
-                <div className="text-2xl font-black text-[#1D4ED8] tracking-tight mt-0.5 uppercase">
+                <div className="text-xs font-medium text-[#6E7280] dark:text-[#A1A1AA]">AI-Estimated Framing Label</div>
+                <div className="text-2xl font-black text-[#1D4ED8] dark:text-[#60A5FA] tracking-tight mt-0.5 uppercase">
                   {biasLabel}
                 </div>
-                <div className="text-xs text-[#6E7280] mt-0.5 flex items-center gap-2">
-                  <span>Sentiment: <strong className="capitalize">{sentimentLabel}</strong> ({sentimentScore})</span>
+                <div className="text-xs text-[#6E7280] dark:text-[#A1A1AA] mt-0.5 flex items-center gap-2">
+                  <span>Sentiment: <strong className="capitalize text-[#0D0D0F] dark:text-[#F4F4F5]">{sentimentLabel}</strong> ({sentimentScore})</span>
                 </div>
               </div>
 
@@ -321,39 +321,39 @@ export default async function NewsDetailsPage({ params }: Props) {
               <div className="space-y-2.5 pt-1">
                 <div>
                   <div className="flex justify-between text-xs font-medium mb-1">
-                    <span className="text-[#0D0D0F]">Left Framing</span>
-                    <span className="font-semibold text-[#B42318]">{leftPct}%</span>
+                    <span className="text-[#0D0D0F] dark:text-[#F4F4F5]">Left Framing</span>
+                    <span className="font-semibold text-[#B42318] dark:text-[#EF4444]">{leftPct}%</span>
                   </div>
-                  <div className="w-full bg-[#F4F4F6] h-2 rounded-full overflow-hidden">
-                    <div className="bg-[#B42318] h-full" style={{ width: `${leftPct}%` }}></div>
-                  </div>
-                </div>
-
-                <div>
-                  <div className="flex justify-between text-xs font-medium mb-1">
-                    <span className="text-[#0D0D0F]">Center Framing</span>
-                    <span className="font-semibold text-[#6E7280]">{centerPct}%</span>
-                  </div>
-                  <div className="w-full bg-[#F4F4F6] h-2 rounded-full overflow-hidden">
-                    <div className="bg-[#CBD5E1] h-full" style={{ width: `${centerPct}%` }}></div>
+                  <div className="w-full bg-[#F4F4F6] dark:bg-[#27272A] h-2 rounded-full overflow-hidden">
+                    <div className="bg-[#B42318] dark:bg-[#EF4444] h-full" style={{ width: `${leftPct}%` }}></div>
                   </div>
                 </div>
 
                 <div>
                   <div className="flex justify-between text-xs font-medium mb-1">
-                    <span className="text-[#0D0D0F]">Right Framing</span>
-                    <span className="font-semibold text-[#1D4ED8]">{rightPct}%</span>
+                    <span className="text-[#0D0D0F] dark:text-[#F4F4F5]">Center Framing</span>
+                    <span className="font-semibold text-[#6E7280] dark:text-[#A1A1AA]">{centerPct}%</span>
                   </div>
-                  <div className="w-full bg-[#F4F4F6] h-2 rounded-full overflow-hidden">
-                    <div className="bg-[#1D4ED8] h-full" style={{ width: `${rightPct}%` }}></div>
+                  <div className="w-full bg-[#F4F4F6] dark:bg-[#27272A] h-2 rounded-full overflow-hidden">
+                    <div className="bg-[#CBD5E1] dark:bg-zinc-600 h-full" style={{ width: `${centerPct}%` }}></div>
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-medium mb-1">
+                    <span className="text-[#0D0D0F] dark:text-[#F4F4F5]">Right Framing</span>
+                    <span className="font-semibold text-[#1D4ED8] dark:text-[#60A5FA]">{rightPct}%</span>
+                  </div>
+                  <div className="w-full bg-[#F4F4F6] dark:bg-[#27272A] h-2 rounded-full overflow-hidden">
+                    <div className="bg-[#1D4ED8] dark:bg-[#3B82F6] h-full" style={{ width: `${rightPct}%` }}></div>
                   </div>
                 </div>
               </div>
 
               {framingNotes && (
-                <div className="pt-2 border-t border-[#F4F4F6]">
-                  <div className="text-xs font-bold text-[#0D0D0F] mb-1">Framing Notes</div>
-                  <p className="text-[12px] text-[#4B5563] leading-relaxed italic bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+                <div className="pt-2 border-t border-[#F4F4F6] dark:border-[#27272A]">
+                  <div className="text-xs font-bold text-[#0D0D0F] dark:text-[#F4F4F5] mb-1">Framing Notes</div>
+                  <p className="text-[12px] text-[#4B5563] dark:text-[#D4D4D8] leading-relaxed italic bg-slate-50 dark:bg-[#121215] p-2.5 rounded-lg border border-slate-100 dark:border-[#27272A]">
                     &quot;{framingNotes}&quot;
                   </p>
                 </div>
@@ -361,27 +361,27 @@ export default async function NewsDetailsPage({ params }: Props) {
             </div>
 
             {/* CARD 2: AI Summary */}
-            <div className="bg-white border border-[#E5E7EB] rounded-xl p-5 shadow-2xs space-y-4">
-              <div className="flex items-center justify-between border-b border-[#F4F4F6] pb-3">
+            <div className="bg-white dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-xl p-5 shadow-2xs space-y-4">
+              <div className="flex items-center justify-between border-b border-[#F4F4F6] dark:border-[#27272A] pb-3">
                 <div className="flex items-center gap-1.5">
-                  <h3 className="text-sm font-bold text-[#0D0D0F]">AI Neutral Summary</h3>
+                  <h3 className="text-sm font-bold text-[#0D0D0F] dark:text-[#F4F4F5]">AI Neutral Summary</h3>
                 </div>
-                <span className="text-[10px] text-slate-400 font-mono">{modelName}</span>
+                <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono">{modelName}</span>
               </div>
 
               {summaryText ? (
-                <div className="text-xs text-[#374151] leading-relaxed space-y-3">
+                <div className="text-xs text-[#374151] dark:text-[#D4D4D8] leading-relaxed space-y-3">
                   <p className="whitespace-pre-line">{summaryText}</p>
                 </div>
               ) : (
-                <ul className="space-y-3 text-xs leading-relaxed text-[#374151] list-disc pl-4">
+                <ul className="space-y-3 text-xs leading-relaxed text-[#374151] dark:text-[#D4D4D8] list-disc pl-4">
                   {fallback?.summary.map((pt, idx) => (
                     <li key={idx}>{pt}</li>
                   ))}
                 </ul>
               )}
 
-              <div className="text-[11px] text-[#9CA3AF] pt-1 italic flex items-center gap-1">
+              <div className="text-[11px] text-[#9CA3AF] dark:text-zinc-500 pt-1 italic flex items-center gap-1">
                 <AlertCircle className="w-3 h-3 flex-shrink-0" />
                 <span>{disclaimer}</span>
               </div>
@@ -389,19 +389,19 @@ export default async function NewsDetailsPage({ params }: Props) {
 
             {/* CARD 3: Loaded Terms & Language Analysis */}
             {loadedTermsList.length > 0 && (
-              <div className="bg-white border border-[#E5E7EB] rounded-xl p-5 shadow-2xs space-y-3">
-                <div className="flex items-center justify-between border-b border-[#F4F4F6] pb-2">
+              <div className="bg-white dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-xl p-5 shadow-2xs space-y-3">
+                <div className="flex items-center justify-between border-b border-[#F4F4F6] dark:border-[#27272A] pb-2">
                   <div className="flex items-center gap-1.5">
-                    <Tag className="w-4 h-4 text-amber-600" />
-                    <h3 className="text-sm font-bold text-[#0D0D0F]">Loaded Vocabulary</h3>
+                    <Tag className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                    <h3 className="text-sm font-bold text-[#0D0D0F] dark:text-[#F4F4F5]">Loaded Vocabulary</h3>
                   </div>
                 </div>
 
                 <div className="space-y-2 pt-1">
                   {loadedTermsList.map((item, idx) => (
-                    <div key={idx} className="bg-amber-50/60 border border-amber-200/60 rounded-lg p-2 text-xs">
-                      <div className="font-bold text-amber-900">{item.term}</div>
-                      {item.context && <div className="text-[11px] text-amber-800/90 mt-0.5">{item.context}</div>}
+                    <div key={idx} className="bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40 rounded-lg p-2 text-xs">
+                      <div className="font-bold text-amber-900 dark:text-amber-300">{item.term}</div>
+                      {item.context && <div className="text-[11px] text-amber-800/90 dark:text-amber-400/90 mt-0.5">{item.context}</div>}
                     </div>
                   ))}
                 </div>
@@ -411,12 +411,12 @@ export default async function NewsDetailsPage({ params }: Props) {
         </div>
 
         {/* BOTTOM NEWSLETTER SIGNUP BANNER */}
-        <div className="bg-white border border-[#E5E7EB] rounded-xl p-6 md:p-8 mt-12 mb-4 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xs">
+        <div className="bg-white dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-xl p-6 md:p-8 mt-12 mb-4 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xs">
           <div className="space-y-1 text-center md:text-left">
-            <h3 className="text-xl md:text-2xl font-extrabold text-[#0D0D0F] tracking-tight">
+            <h3 className="text-xl md:text-2xl font-extrabold text-[#0D0D0F] dark:text-[#F4F4F5] tracking-tight">
               Stay Informed. Stay Balanced.
             </h3>
-            <p className="text-xs md:text-sm text-[#6E7280]">
+            <p className="text-xs md:text-sm text-[#6E7280] dark:text-[#A1A1AA]">
               Get the top stories and bias analysis delivered to your inbox.
             </p>
           </div>
@@ -425,11 +425,11 @@ export default async function NewsDetailsPage({ params }: Props) {
             <input
               type="email"
               placeholder="Enter your email"
-              className="px-4 py-2 text-xs md:text-sm border border-[#E5E7EB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D0D0F] flex-1 bg-white text-[#0D0D0F]"
+              className="px-4 py-2 text-xs md:text-sm border border-[#E5E7EB] dark:border-[#27272A] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0D0D0F] dark:focus:ring-[#F4F4F5] flex-1 bg-white dark:bg-[#121215] text-[#0D0D0F] dark:text-[#F4F4F5]"
             />
             <Button
               variant="primary"
-              className="bg-[#0D0D0F] text-white px-5 py-2 rounded-lg font-semibold text-xs md:text-sm hover:bg-black transition-colors whitespace-nowrap"
+              className="bg-[#0D0D0F] dark:bg-[#F4F4F5] text-white dark:text-[#0D0D0F] px-5 py-2 rounded-lg font-semibold text-xs md:text-sm hover:bg-black dark:hover:bg-white transition-colors whitespace-nowrap"
             >
               Subscribe
             </Button>
@@ -442,3 +442,4 @@ export default async function NewsDetailsPage({ params }: Props) {
     </div>
   );
 }
+

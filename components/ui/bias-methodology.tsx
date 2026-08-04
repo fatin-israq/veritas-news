@@ -47,7 +47,7 @@ export const BiasMethodology: React.FC<BiasMethodologyProps> = ({
         onClick={handleToggle}
         aria-expanded={isOpen}
         data-attr="how-we-analyze-bias"
-        className="flex items-center gap-1.5 text-[11px] font-semibold text-[#1D4ED8] hover:text-[#0D0D0F] transition-colors"
+        className="flex items-center gap-1.5 text-[11px] font-semibold text-[#1D4ED8] dark:text-[#60A5FA] hover:text-[#0D0D0F] dark:hover:text-[#F4F4F5] transition-colors cursor-pointer"
       >
         <Info className="w-3.5 h-3.5" />
         <span>How We Analyze Bias</span>
@@ -57,9 +57,9 @@ export const BiasMethodology: React.FC<BiasMethodologyProps> = ({
       </button>
 
       {isOpen && (
-        <div className="bg-white border border-[#E5E7EB] rounded-lg p-3 text-[11px] leading-relaxed text-[#4B5563] space-y-2">
+        <div className="bg-white dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-lg p-3 text-[11px] leading-relaxed text-[#4B5563] dark:text-[#D4D4D8] space-y-2">
           <p>
-            Every article is passed to <strong>{modelName}</strong>, which reads
+            Every article is passed to <strong className="text-[#0D0D0F] dark:text-[#F4F4F5]">{modelName}</strong>, which reads
             only the article text — never the outlet&apos;s reputation — and
             estimates how much of the framing leans left, center, and right. The
             three percentages always add up to 100%.
@@ -69,7 +69,7 @@ export const BiasMethodology: React.FC<BiasMethodologyProps> = ({
             here). When the evidence is weak, the framing label is marked
             unclear and confidence stays low.
           </p>
-          <p className="text-[#9CA3AF] italic">
+          <p className="text-[#9CA3AF] dark:text-zinc-500 italic">
             These are AI estimates, not objective truth. Use them as a prompt to
             read critically, not as a verdict on the publisher.
           </p>
@@ -78,3 +78,4 @@ export const BiasMethodology: React.FC<BiasMethodologyProps> = ({
     </div>
   );
 };
+

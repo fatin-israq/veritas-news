@@ -110,14 +110,10 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
   const totalArticles = articles.length;
   const totalPages = Math.max(1, Math.ceil(totalArticles / itemsPerPage));
 
-  // Ensure current page remains within valid bounds if totalPages shrinks
-  useEffect(() => {
-    if (currentPage > totalPages) {
-      setCurrentPage(totalPages);
-    }
-  }, [totalPages, currentPage]);
+  // Ensure effective current page remains within valid bounds if totalPages shrinks
+  const effectiveCurrentPage = Math.min(currentPage, totalPages);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
+  const startIndex = (effectiveCurrentPage - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, totalArticles);
   const currentArticles = articles.slice(startIndex, endIndex);
 
@@ -132,7 +128,8 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
     }
   };
 
-  const paginationRange = getPaginationRange(currentPage, totalPages);
+  const paginationRange = getPaginationRange(effectiveCurrentPage, totalPages);
+
 
   return (
     <div ref={containerRef} className="w-full space-y-8">
@@ -159,19 +156,19 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
       </div>
 
       {/* Pagination Controls Section */}
-      <div className="pt-6 border-t border-[#E5E7EB] flex flex-col sm:flex-row items-center justify-between gap-4 select-none">
+      <div className="pt-6 border-t border-[#E5E7EB] dark:border-[#27272A] flex flex-col sm:flex-row items-center justify-between gap-4 select-none transition-colors duration-200">
         {/* Current range summary */}
-        <div className="text-xs sm:text-sm text-[#6E7280] font-medium text-center sm:text-left">
-          Showing <span className="font-semibold text-[#0D0D0F]">{totalArticles > 0 ? startIndex + 1 : 0}</span> to{" "}
-          <span className="font-semibold text-[#0D0D0F]">{endIndex}</span> of{" "}
-          <span className="font-semibold text-[#0D0D0F]">{totalArticles}</span> articles
+        <div className="text-xs sm:text-sm text-[#6E7280] dark:text-[#A1A1AA] font-medium text-center sm:text-left">
+          Showing <span className="font-semibold text-[#0D0D0F] dark:text-[#F4F4F5]">{totalArticles > 0 ? startIndex + 1 : 0}</span> to{" "}
+          <span className="font-semibold text-[#0D0D0F] dark:text-[#F4F4F5]">{endIndex}</span> of{" "}
+          <span className="font-semibold text-[#0D0D0F] dark:text-[#F4F4F5]">{totalArticles}</span> articles
         </div>
 
         {/* Page Buttons & Selector */}
         <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto">
           {/* Items Per Page Dropdown */}
-          <div className="flex items-center space-x-2 text-xs sm:text-sm text-[#6E7280] mr-1">
-            <label htmlFor="items-per-page-select" className="hidden sm:inline font-medium text-xs text-[#6E7280]">
+          <div className="flex items-center space-x-2 text-xs sm:text-sm text-[#6E7280] dark:text-[#A1A1AA] mr-1">
+            <label htmlFor="items-per-page-select" className="hidden sm:inline font-medium text-xs text-[#6E7280] dark:text-[#A1A1AA]">
               Per page:
             </label>
             <select
@@ -181,7 +178,7 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
                 setPageSizeSelection(e.target.value);
                 setCurrentPage(1);
               }}
-              className="h-11 sm:h-9 px-2.5 py-1 text-xs sm:text-sm font-medium text-[#0D0D0F] bg-white border border-[#E5E7EB] rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0D0D0F] transition-colors cursor-pointer"
+              className="h-11 sm:h-9 px-2.5 py-1 text-xs sm:text-sm font-medium text-[#0D0D0F] dark:text-[#F4F4F5] bg-white dark:bg-[#18181B] border border-[#E5E7EB] dark:border-[#27272A] rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0D0D0F] dark:focus:ring-[#F4F4F5] transition-colors cursor-pointer"
               aria-label="Select articles per page"
             >
               <option value="auto">Auto ({isMobileView ? "6" : "12"})</option>
@@ -197,13 +194,13 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
             {/* Previous Page Button */}
             <button
               type="button"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
+              onClick={() => handlePageChange(effectiveCurrentPage - 1)}
+              disabled={effectiveCurrentPage === 1}
               aria-label="Previous page"
               className={`min-h-[44px] min-w-[44px] sm:min-h-[36px] sm:min-w-[36px] px-2.5 sm:px-3 py-1.5 flex items-center justify-center space-x-1 text-xs sm:text-sm font-medium rounded-lg border transition-all duration-150 ${
-                currentPage === 1
-                  ? "bg-[#F4F4F6] text-[#9CA3AF] border-[#E5E7EB] cursor-not-allowed"
-                  : "bg-white text-[#0D0D0F] border-[#E5E7EB] hover:bg-[#F4F4F6] active:bg-[#E5E7EB] shadow-sm"
+                effectiveCurrentPage === 1
+                  ? "bg-[#F4F4F6] dark:bg-[#18181B] text-[#9CA3AF] dark:text-zinc-600 border-[#E5E7EB] dark:border-[#27272A] cursor-not-allowed"
+                  : "bg-white dark:bg-[#18181B] text-[#0D0D0F] dark:text-[#F4F4F5] border-[#E5E7EB] dark:border-[#27272A] hover:bg-[#F4F4F6] dark:hover:bg-[#27272A] active:bg-[#E5E7EB] shadow-sm"
               }`}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -217,14 +214,14 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
                   return (
                     <span
                       key={`ellipsis-${idx}`}
-                      className="min-h-[44px] min-w-[32px] sm:min-h-[36px] sm:min-w-[32px] flex items-center justify-center text-xs text-[#9CA3AF]"
+                      className="min-h-[44px] min-w-[32px] sm:min-h-[36px] sm:min-w-[32px] flex items-center justify-center text-xs text-[#9CA3AF] dark:text-zinc-500"
                     >
                       ...
                     </span>
                   );
                 }
 
-                const isCurrent = page === currentPage;
+                const isCurrent = page === effectiveCurrentPage;
                 return (
                   <button
                     key={`page-${page}`}
@@ -234,8 +231,8 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
                     aria-label={`Page ${page}`}
                     className={`min-h-[44px] min-w-[44px] sm:min-h-[36px] sm:min-w-[36px] px-2 sm:px-3 py-1.5 flex items-center justify-center text-xs sm:text-sm font-semibold rounded-lg transition-all duration-150 ${
                       isCurrent
-                        ? "bg-[#0D0D0F] text-white border border-[#0D0D0F] shadow-sm"
-                        : "bg-white text-[#0D0D0F] border border-[#E5E7EB] hover:bg-[#F4F4F6] active:bg-[#E5E7EB]"
+                        ? "bg-[#0D0D0F] dark:bg-[#F4F4F5] text-white dark:text-[#0D0D0F] border border-[#0D0D0F] dark:border-[#F4F4F5] shadow-sm"
+                        : "bg-white dark:bg-[#18181B] text-[#0D0D0F] dark:text-[#F4F4F5] border border-[#E5E7EB] dark:border-[#27272A] hover:bg-[#F4F4F6] dark:hover:bg-[#27272A] active:bg-[#E5E7EB]"
                     }`}
                   >
                     {page}
@@ -247,21 +244,23 @@ export const PaginatedArticleList: React.FC<PaginatedArticleListProps> = ({
             {/* Next Page Button */}
             <button
               type="button"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
+              onClick={() => handlePageChange(effectiveCurrentPage + 1)}
+              disabled={effectiveCurrentPage === totalPages}
               aria-label="Next page"
               className={`min-h-[44px] min-w-[44px] sm:min-h-[36px] sm:min-w-[36px] px-2.5 sm:px-3 py-1.5 flex items-center justify-center space-x-1 text-xs sm:text-sm font-medium rounded-lg border transition-all duration-150 ${
-                currentPage === totalPages
-                  ? "bg-[#F4F4F6] text-[#9CA3AF] border-[#E5E7EB] cursor-not-allowed"
-                  : "bg-white text-[#0D0D0F] border-[#E5E7EB] hover:bg-[#F4F4F6] active:bg-[#E5E7EB] shadow-sm"
+                effectiveCurrentPage === totalPages
+                  ? "bg-[#F4F4F6] dark:bg-[#18181B] text-[#9CA3AF] dark:text-zinc-600 border-[#E5E7EB] dark:border-[#27272A] cursor-not-allowed"
+                  : "bg-white dark:bg-[#18181B] text-[#0D0D0F] dark:text-[#F4F4F5] border-[#E5E7EB] dark:border-[#27272A] hover:bg-[#F4F4F6] dark:hover:bg-[#27272A] active:bg-[#E5E7EB] shadow-sm"
               }`}
             >
               <span className="hidden xs:inline">Next</span>
               <ChevronRight className="w-4 h-4" />
             </button>
+
           </div>
         </div>
       </div>
+
     </div>
   );
 };

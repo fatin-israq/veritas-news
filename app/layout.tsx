@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { PostHogProvider } from "@/components/analytics/posthog-provider";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const poppins = Poppins({
@@ -28,14 +29,46 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${poppins.variable} h-full antialiased font-sans`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col bg-[#F8F8F6] text-[#0D0D0F]">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var saved = localStorage.getItem('veritas-theme');
+                  var theme = (saved === 'light' || saved === 'dark' || saved === 'system') ? saved : 'light';
+                  var isDark = false;
+                  if (theme === 'dark') {
+                    isDark = true;
+                  } else if (theme === 'system') {
+                    isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  } else {
+                    isDark = false;
+                  }
+                  if (isDark) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-[#F8F8F6] dark:bg-[#09090B] text-[#0D0D0F] dark:text-[#F4F4F5] transition-colors duration-200">
+
         <ClerkProvider>
           <PostHogProvider>
-            {children}
+            <ThemeProvider>
+              {children}
+            </ThemeProvider>
           </PostHogProvider>
         </ClerkProvider>
       </body>
     </html>
   );
 }
+

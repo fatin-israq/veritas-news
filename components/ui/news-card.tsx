@@ -40,7 +40,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({
 
   return (
     <div
-      className={`bg-white rounded-xl border border-[#E5E7EB] overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 flex flex-col group ${className}`}
+      className={`bg-white dark:bg-[#18181B] rounded-xl border border-[#E5E7EB] dark:border-[#27272A] overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 flex flex-col group ${className}`}
     >
       {/* Article Link wrapper covering Image and Main Details */}
       <Link
@@ -49,7 +49,7 @@ export const NewsCard: React.FC<NewsCardProps> = ({
         className="flex flex-col flex-1 cursor-pointer"
       >
         {/* Thumbnail Image Container */}
-        <div className="relative w-full h-[210px] bg-slate-100 flex-shrink-0 overflow-hidden">
+        <div className="relative w-full h-[210px] bg-slate-100 dark:bg-zinc-800 flex-shrink-0 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={imageUrl}
@@ -73,19 +73,19 @@ export const NewsCard: React.FC<NewsCardProps> = ({
         <div className="p-4 flex flex-col justify-between flex-1 space-y-3">
           <div className="space-y-2">
             {/* Category & Location Meta */}
-            <div className="text-[12px] font-medium text-[#6E7280]">
-              <span className="font-bold text-[#0D0D0F]">{category}</span>
-              <span className="mx-1.5 font-normal text-[#9CA3AF]">·</span>
+            <div className="text-[12px] font-medium text-[#6E7280] dark:text-[#A1A1AA]">
+              <span className="font-bold text-[#0D0D0F] dark:text-[#F4F4F5]">{category}</span>
+              <span className="mx-1.5 font-normal text-[#9CA3AF] dark:text-zinc-500">·</span>
               <span>{displayLocation}</span>
             </div>
 
             {/* Headline Title */}
-            <h3 className="text-[15px] md:text-[16px] font-bold text-[#0D0D0F] leading-snug line-clamp-3 group-hover:text-[#1D4ED8] transition-colors tracking-tight">
+            <h3 className="text-[15px] md:text-[16px] font-bold text-[#0D0D0F] dark:text-[#F4F4F5] leading-snug line-clamp-3 group-hover:text-[#1D4ED8] dark:group-hover:text-[#60A5FA] transition-colors tracking-tight">
               {title}
             </h3>
 
             {excerpt && (
-              <p className="text-xs text-[#6E7280] line-clamp-2 leading-relaxed pt-0.5">
+              <p className="text-xs text-[#6E7280] dark:text-[#A1A1AA] line-clamp-2 leading-relaxed pt-0.5">
                 {excerpt}
               </p>
             )}
@@ -100,12 +100,13 @@ export const NewsCard: React.FC<NewsCardProps> = ({
               showScale={false}
             />
 
-            <div className="text-[12px] text-[#6E7280] font-medium">
+            <div className="text-[12px] text-[#6E7280] dark:text-[#A1A1AA] font-medium">
               {formattedSources}
             </div>
           </div>
         </div>
       </Link>
     </div>
+
   );
 };

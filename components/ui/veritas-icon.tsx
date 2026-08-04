@@ -44,27 +44,27 @@ export const VeritasIcon: React.FC<VeritasIconProps> = ({
       <defs>
         {/* Background Gradient */}
         <linearGradient id="vi-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#141417" />
-          <stop offset="100%" stop-color="#09090B" />
+          <stop offset="0%" stopColor="#141417" />
+          <stop offset="100%" stopColor="#09090B" />
         </linearGradient>
 
         {/* Left Wing Gradient */}
         <linearGradient id="vi-left-wing" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#FFFFFF" />
-          <stop offset="100%" stop-color="#94A3B8" />
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#94A3B8" />
         </linearGradient>
 
         {/* Right Wing Gradient */}
         <linearGradient id="vi-right-wing" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#EF4444" />
-          <stop offset="50%" stop-color="#B42318" />
-          <stop offset="100%" stop-color="#7F1D1D" />
+          <stop offset="0%" stopColor="#EF4444" />
+          <stop offset="50%" stopColor="#B42318" />
+          <stop offset="100%" stopColor="#7F1D1D" />
         </linearGradient>
 
         {/* Center Fold Prism */}
         <linearGradient id="vi-prism" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#FCA5A5" />
-          <stop offset="100%" stop-color="#DC2626" />
+          <stop offset="0%" stopColor="#FCA5A5" />
+          <stop offset="100%" stopColor="#DC2626" />
         </linearGradient>
 
         {/* Subtle Glow Shadow */}
@@ -73,11 +73,12 @@ export const VeritasIcon: React.FC<VeritasIconProps> = ({
             dx="0"
             dy="10"
             stdDeviation="14"
-            flood-color="#B42318"
-            flood-opacity="0.3"
+            floodColor="#B42318"
+            floodOpacity="0.3"
           />
         </filter>
       </defs>
+
 
       {/* Container Background (if enabled) */}
       {showBackground && (
