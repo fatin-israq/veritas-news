@@ -35,22 +35,17 @@ export const Footer: React.FC = () => {
               </h4>
               <ul className="space-y-2 text-xs text-neutral-400 font-medium">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/about" className="hover:text-white transition-colors">
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
-                    Careers
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/press" className="hover:text-white transition-colors">
                     Press
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/contact" className="hover:text-white transition-colors">
                     Contact
                   </Link>
                 </li>
@@ -64,22 +59,22 @@ export const Footer: React.FC = () => {
               </h4>
               <ul className="space-y-2 text-xs text-neutral-400 font-medium">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/help" className="hover:text-white transition-colors">
                     Help Center
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/guides" className="hover:text-white transition-colors">
                     Guides
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/privacy" className="hover:text-white transition-colors">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors">
+                  <Link href="/terms" className="hover:text-white transition-colors">
                     Terms of Service
                   </Link>
                 </li>
@@ -93,17 +88,21 @@ export const Footer: React.FC = () => {
               </h4>
               <div className="flex items-center gap-3 text-neutral-400">
                 {/* X / Twitter Icon */}
-                <Link
-                  href="#"
+                <a
+                  href="https://x.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-white transition-colors font-extrabold text-sm"
                   aria-label="X (Twitter)"
                 >
                   X
-                </Link>
+                </a>
 
                 {/* LinkedIn Icon */}
-                <Link
-                  href="#"
+                <a
+                  href="https://linkedin.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                   aria-label="LinkedIn"
                 >
@@ -114,11 +113,13 @@ export const Footer: React.FC = () => {
                   >
                     <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z" />
                   </svg>
-                </Link>
+                </a>
 
                 {/* YouTube Icon */}
-                <Link
-                  href="#"
+                <a
+                  href="https://youtube.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                   aria-label="YouTube"
                 >
@@ -129,11 +130,13 @@ export const Footer: React.FC = () => {
                   >
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                   </svg>
-                </Link>
+                </a>
 
                 {/* Play Store / Media Icon */}
-                <Link
-                  href="#"
+                <a
+                  href="https://play.google.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:text-white transition-colors"
                   aria-label="Play Store"
                 >
@@ -144,7 +147,7 @@ export const Footer: React.FC = () => {
                   >
                     <path d="M3 22v-20l18 10-18 10z" />
                   </svg>
-                </Link>
+                </a>
               </div>
             </div>
           </div>

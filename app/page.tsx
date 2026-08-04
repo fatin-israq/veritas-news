@@ -97,28 +97,14 @@ export default async function Home() {
 
       {/* Main Container */}
       <main className="max-w-[1280px] mx-auto px-4 md:px-8 py-8 w-full flex-1">
-        {/* Section Heading & Supabase Status Badge */}
-        <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-[#0D0D0F] tracking-tight">
-              Top News
-            </h1>
-            <p className="text-xs text-[#6E7280] mt-1">
-              {hasLiveData
-                ? `Showing ${dbArticles.length} live analyzed articles from Supabase database`
-                : "Connected to Supabase database (0 live articles stored — run scraper & AI pipeline to populate)"}
-            </p>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${hasLiveData ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
-              <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${hasLiveData ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
-            </span>
-            <span className="text-xs font-semibold text-[#0D0D0F]">
-              Supabase Connected
-            </span>
-          </div>
+        {/* Section Heading */}
+        <div className="mb-6">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-[#0D0D0F] tracking-tight">
+            Top News
+          </h1>
+          <p className="text-xs text-[#6E7280] mt-1">
+            Real-time news stories analyzed for political framing and sentiment.
+          </p>
         </div>
 
         {dbError && (
